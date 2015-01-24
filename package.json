@@ -1,0 +1,37 @@
+{
+  "name": "react-gadget-tools",
+  "version": "0.0.1",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Versal/react-gadget-tools.git"
+  },
+  "scripts": {
+    "test": "./node_modules/karma/bin/karma start --single-run",
+    "start": "./node_modules/karma/bin/karma start --auto-watch"
+  },
+  "dependencies": {
+    "es6-promise": "~2.0.1",
+    "versal-gadget-api": "../versal-gadget-api"
+  },
+  "peerDependencies": {
+    "react": "~0.12.2",
+    "underscore": "~1.7.0"
+  },
+  "devDependencies": {
+    "chai": "~1.10.0",
+    "fs-extra": "~0.14.0",
+    "jshint-loader": "~0.8.1",
+    "jsx-loader": "~0.12.2",
+    "karma": "~0.12.31",
+    "karma-chai": "~0.1.0",
+    "karma-chrome-launcher": "~0.1.7",
+    "karma-mocha": "~0.1.10",
+    "karma-sinon": "~1.0.4",
+    "karma-sourcemap-loader": "~0.3.2",
+    "karma-spec-reporter": "0.0.16",
+    "karma-webpack": "~1.5.0",
+    "mocha": "~2.1.0",
+    "sinon": "~1.12.2",
+    "webpack": "~1.5.1"
+  }
+}
