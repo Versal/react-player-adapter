@@ -1,5 +1,7 @@
 'use strict';
 
+/* global window */
+
 // The `PlayerAdapter` initializes and interacts with the `VersalPlayerAPI` and
 // provides services to the main app by handling callbacks and setting props on
 // it's child component sheltering the main app from knowing much about the

@@ -31,8 +31,6 @@ module.exports = {
     unused: 'vars',
     esnext: true,
     predef: [
-      // pesky browsers
-      'document',
       // testing tools
       'it',
       'sinon',
