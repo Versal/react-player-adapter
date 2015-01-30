@@ -19,11 +19,14 @@ var PlayerStateMixin = {
     var player = this.player;
 
     return new Promise(function(resolve, reject) {
-      player.once(eventName, resolve);
-      setTimeout(function() {
+      var timeout = setTimeout(function() {
         player.removeListener(eventName, resolve);
         reject(new Error(`Timed out waiting for ${eventName}`));
-      }, 100);
+      }, 500);
+      player.once(eventName, function() {
+        clearTimeout(timeout);
+        resolve();
+      });
     });
   },
 
