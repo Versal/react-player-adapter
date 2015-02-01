@@ -54,6 +54,19 @@ var PlayerAdapter = React.createClass({
     this.player.unwatchBodyHeight();
   },
 
+  getMutatorFor: function(dataType, keyName) {
+    return function(val) {
+      var data = {};
+      data[keyName] = val;
+
+      if (dataType === 'learnerState') {
+        this.saveLearnerState(data);
+      } else {
+        this.saveAttributes(data);
+      }
+    }.bind(this);
+  },
+
   saveAttributes: function(attributes) {
     this.setState(attributes);
     this.player.setAttributes(attributes);
@@ -66,6 +79,7 @@ var PlayerAdapter = React.createClass({
 
   render: function() {
     var additionalProps = {
+      getMutatorFor: this.getMutatorFor,
       saveLearnerState: this.saveLearnerState,
       saveAttributes: this.saveAttributes
     };
