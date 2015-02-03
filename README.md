@@ -8,10 +8,6 @@ Useful components for building React-based gadgets
 
 An adapater component for React apps that makes it easy to integrate with a `VersalPlayerAPI` instance. [Read more](components/player_adapter/README.md)
 
-## Mixins
-
-`PlayerAdapter` is uses several mixins that are exported if you want to build your own similar component. [Read more](mixins/README.md)
-
 ## Development
 
 Watch and run tests.

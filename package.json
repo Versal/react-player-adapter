@@ -10,7 +10,7 @@
     "start": "./node_modules/karma/bin/karma start --auto-watch"
   },
   "dependencies": {
-    "es6-promise": "~2.0.1",
+    "resistance": "jgallen23/resistance",
     "versal-gadget-api": "../versal-gadget-api"
   },
   "peerDependencies": {

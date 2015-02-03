@@ -8,10 +8,10 @@ module.exports = function(config) {
     frameworks: ['mocha', 'chai', 'sinon'],
     files: [
       'node_modules/react/dist/react-with-addons.js',
-      'tests/**/*_spec.js?(x)'
+      'components/**/spec.js?(x)'
     ],
     preprocessors: {
-      'tests/**/*_spec.js?(x)': ['webpack', 'sourcemap']
+      'components/**/spec.js?(x)': ['webpack', 'sourcemap']
     },
     webpack: webpack,
     reporters: ['spec'],
