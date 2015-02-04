@@ -10,8 +10,7 @@
     "start": "./node_modules/karma/bin/karma start --auto-watch"
   },
   "dependencies": {
-    "resistance": "jgallen23/resistance",
-    "versal-gadget-api": "../versal-gadget-api"
+    "resistance": "jgallen23/resistance"
   },
   "peerDependencies": {
     "react": "~0.12.2",
@@ -19,7 +18,7 @@
   },
   "devDependencies": {
     "chai": "~1.10.0",
-    "fs-extra": "~0.14.0",
+    "jshint": "~2.6.0",
     "jshint-loader": "~0.8.1",
     "jsx-loader": "~0.12.2",
     "karma": "~0.12.31",
@@ -27,11 +26,11 @@
     "karma-chrome-launcher": "~0.1.7",
     "karma-mocha": "~0.1.10",
     "karma-sinon": "~1.0.4",
-    "karma-sourcemap-loader": "~0.3.2",
     "karma-spec-reporter": "0.0.16",
     "karma-webpack": "~1.5.0",
     "mocha": "~2.1.0",
     "sinon": "~1.12.2",
-    "webpack": "~1.5.1"
+    "versal-gadget-api": "Versal/versal-gadget-api",
+    "webpack": "~1.5.3"
   }
 }

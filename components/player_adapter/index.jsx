@@ -63,6 +63,7 @@ var PlayerAdapter = React.createClass({
   },
 
   render: function() {
+    // We pass a bunch of mutation helpers into the root component
     var playerStateMutators = _.pick(this, [
       'setStateAndAttributes',
       'setStateAndLearnerState',
@@ -73,12 +74,18 @@ var PlayerAdapter = React.createClass({
     var { playerStateReady, ...playerState } = this.state;
 
     if (playerStateReady) {
-      var appComponent = this.props.children;
       // Render the app component with player state set as props. State setters
       // are also included.
-      return React.addons.cloneWithProps(
-        appComponent,
-        _.extend({}, playerState, playerStateMutators)
+      var appComponent = React.addons.cloneWithProps(
+        this.props.children,
+        _.extend(
+          {},
+          playerState,
+          playerStateMutators
+        )
+      );
+      return (
+        <div className="player-adapter">{appComponent}</div>
       );
     } else {
       return null;
@@ -135,6 +142,7 @@ var PlayerAdapter = React.createClass({
       this._waitForEvent.bind(this, 'learnerStateChanged'),
       this._waitForEvent.bind(this, 'editableChanged')
     ], function(attributes, learnerState, editable) {
+      // Look through the results to see if there are any errors
       var initialData = [attributes, learnerState, editable];
       var error = _.find(initialData, function(data) {
         return !!data.error;

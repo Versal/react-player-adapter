@@ -5,7 +5,7 @@ var TestUtils = React.addons.TestUtils;
 var renderComponent = TestUtils.renderIntoDocument;
 var findComponent = TestUtils.findRenderedDOMComponentWithClass;
 
-var PlayerAdapter = require('../../components/player_adapter');
+var PlayerAdapter = require('.');
 var VersalPlayerAPI = require('versal-gadget-api/src/player-api');
 
 describe('Player', function() {

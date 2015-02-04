@@ -10,6 +10,15 @@ module.exports = {
       '.jsx'
     ]
   },
+  module: {
+    loaders: [
+      {
+        test: /\.jsx?$/,
+        exclude: /node_modules/,
+        loaders: ['jshint', 'jsx-loader?harmony']
+      }
+    ]
+  },
   jshint: {
     node: true,
     boss: true,
@@ -33,22 +42,6 @@ module.exports = {
       'sinon',
       'describe',
       'expect'
-    ]
-  },
-  module: {
-    loaders: [
-      {
-        test: /\.jsx?$/,
-        exclude: /node_modules/,
-        loader: 'jsx-loader?harmony'
-      }
-    ],
-    postLoaders: [
-      {
-        test: /\.jsx?$/,
-        exclude: /node_modules/,
-        loader: 'jshint-loader'
-      }
     ]
   }
 };

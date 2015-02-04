@@ -10,7 +10,7 @@ module.exports = function(config) {
       'components/**/spec.js?(x)'
     ],
     preprocessors: {
-      'components/**/spec.js?(x)': ['webpack', 'sourcemap']
+      'components/**/spec.js?(x)': ['webpack']
     },
     webpack: webpack,
     reporters: ['spec'],
