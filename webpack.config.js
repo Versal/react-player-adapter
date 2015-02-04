@@ -1,5 +1,5 @@
 module.exports = {
-  devtool: 'inline-source-map',
+  devtool: 'eval',
   resolve: {
     modulesDirectories: [
       'node_modules'
@@ -9,9 +9,6 @@ module.exports = {
       '.js',
       '.jsx'
     ]
-  },
-  externals: {
-    'react/addons': 'React'
   },
   jshint: {
     node: true,
@@ -42,6 +39,7 @@ module.exports = {
     loaders: [
       {
         test: /\.jsx?$/,
+        exclude: /node_modules/,
         loader: 'jsx-loader?harmony'
       }
     ],

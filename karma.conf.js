@@ -7,7 +7,6 @@ module.exports = function(config) {
   config.set({
     frameworks: ['mocha', 'chai', 'sinon'],
     files: [
-      'node_modules/react/dist/react-with-addons.js',
       'components/**/spec.js?(x)'
     ],
     preprocessors: {
