@@ -1,16 +1,16 @@
 'use strict';
 
-// The `PlayerAdapter` initializes and interacts with the `VersalPlayerAPI` and
-// provides services to the main app by handling callbacks and setting props on
-// it's child component sheltering the main app from knowing much about the
-// scary world outside of React.
+// The `PlayerAdapter` interacts with the `VersalPlayerAPI` and provides
+// services to the main app by handling callbacks and setting props on it's
+// child component sheltering the main app from knowing much about the scary
+// world outside of React.
 
-var runAsync = require('resistance');
 var _ = require('underscore');
+var runAsync = require('resistance');
 var React = require('react/addons');
-var VersalPlayerAPI = require('versal-gadget-api/src/player-api');
 
 var PlayerAdapter = React.createClass({
+
   // Setup
 
   getInitialState: function() {
@@ -21,13 +21,12 @@ var PlayerAdapter = React.createClass({
 
   getDefaultProps: function() {
     return {
-      propertySheets: {},
-      debug: false
+      propertySheets: {}
     };
   },
 
   propTypes: {
-    debug: React.PropTypes.bool,
+    playerApi: React.PropTypes.object.isRequired,
     propertySheets: React.PropTypes.object,
     // `PlayerAdapter` expects your app's root component as it's child, and
     // nothing else.
@@ -37,9 +36,8 @@ var PlayerAdapter = React.createClass({
   // Lifecycle
 
   componentWillMount: function() {
-    this.player = new VersalPlayerAPI({
-      debug: this.props.debug
-    });
+    // Make a shorter ref because we work with it a lot
+    this.player = this.props.playerApi;
 
     // Track all player state changes
     this.player.on('attributesChanged', this._onStateChange);

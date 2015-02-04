@@ -6,12 +6,14 @@ var renderComponent = TestUtils.renderIntoDocument;
 var findComponent = TestUtils.findRenderedDOMComponentWithClass;
 
 var PlayerAdapter = require('../../components/player_adapter');
+var VersalPlayerAPI = require('versal-gadget-api/src/player-api');
 
 describe('Player', function() {
   describe('Init', function() {
     it('should create a versal API instance', function() {
+      var playerApi = new VersalPlayerAPI();
       var playerAdapterComponent = renderComponent(
-        <PlayerAdapter>
+        <PlayerAdapter playerApi={playerApi}>
           <div>test component</div>
         </PlayerAdapter>
       );
@@ -23,8 +25,9 @@ describe('Player', function() {
   describe('State', function() {
     describe('attributes', function() {
       it('should sync to `this.state`', function() {
+        var playerApi = new VersalPlayerAPI();
         var playerAdapterComponent = renderComponent(
-          <PlayerAdapter>
+          <PlayerAdapter playerApi={playerApi}>
             <div>test component</div>
           </PlayerAdapter>
         );
@@ -37,8 +40,9 @@ describe('Player', function() {
 
     describe('learnerState', function() {
       it('should sync to `this.state`', function() {
+        var playerApi = new VersalPlayerAPI();
         var playerAdapterComponent = renderComponent(
-          <PlayerAdapter>
+          <PlayerAdapter playerApi={playerApi}>
             <div>test component</div>
           </PlayerAdapter>
         );
@@ -51,8 +55,9 @@ describe('Player', function() {
 
     describe('editable', function() {
       it('should sync to `this.state`', function() {
+        var playerApi = new VersalPlayerAPI();
         var playerAdapterComponent = renderComponent(
-          <PlayerAdapter>
+          <PlayerAdapter playerApi={playerApi}>
             <div>test component</div>
           </PlayerAdapter>
         );
@@ -68,8 +73,9 @@ describe('Player', function() {
 
   describe('Readiness', function() {
     it('should export a falsey value', function() {
+      var playerApi = new VersalPlayerAPI();
       var playerAdapterComponent = renderComponent(
-        <PlayerAdapter>
+        <PlayerAdapter playerApi={playerApi}>
           <div>test component</div>
         </PlayerAdapter>
       );
@@ -79,8 +85,9 @@ describe('Player', function() {
 
     describe('when all data has arrived', function() {
       it('should export a truthey value', function(done) {
+        var playerApi = new VersalPlayerAPI();
         var playerAdapterComponent = renderComponent(
-          <PlayerAdapter>
+          <PlayerAdapter playerApi={playerApi}>
             <div>test component</div>
           </PlayerAdapter>
         );
@@ -99,9 +106,10 @@ describe('Player', function() {
 
   describe('Render', function() {
     it('should render nothing', function() {
+      var playerApi = new VersalPlayerAPI();
       var playerAdapterComponent = renderComponent(
         <div className="wrapper">
-          <PlayerAdapter>
+          <PlayerAdapter playerApi={playerApi}>
             <div className="test">test component</div>
           </PlayerAdapter>
         </div>
@@ -115,8 +123,9 @@ describe('Player', function() {
     describe('when data is ready', function() {
       it('should render the child component with `this state` set as props', function(done) {
 
+        var playerApi = new VersalPlayerAPI();
         var playerAdapterComponent = renderComponent(
-          <PlayerAdapter>
+          <PlayerAdapter playerApi={playerApi}>
             <div className="test">test component</div>
           </PlayerAdapter>
         );
