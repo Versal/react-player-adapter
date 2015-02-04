@@ -18,16 +18,16 @@ Wrapping your app's root component with a `PlayerAdapter` has the following bene
 
 * `PlayerAdapter` takes a prop called `propertySheets` with your app's desired property sheet schema. Data from property sheets will flow back into your app via `props` along with other data.
 
-### State
+## State helpers
 
 Four methods are provided for updating state:
 
-#### `attributesSetterFor(key)`
-#### `learnerStateSetterFor(key)`
+### `attributesSetterFor(key)`
+### `learnerStateSetterFor(key)`
 
 These allow you to create a setter for a specific field for use by the component that's responsible for handling the corresponding input. This is the preferred method when using `PlayerAdapter`.
 
-##### Example
+#### Example
 
 ```
 onComponentWillMount: function() {
@@ -47,8 +47,8 @@ render: function() {
 }
 ```
 
-#### `setStateAndAttributes(attributes)`
-#### `setStateAndLearnerState(learnerState)`
+### `setStateAndAttributes(attributes)`
+### `setStateAndLearnerState(learnerState)`
 
 These lower level methods (which are called by `attributesSetterFor` and `learnerStateSetterFor`) call `setState` and `setAttributes`/`setLearnerState`. Since React's state is set via `setState` the data will flow into your app via props and changes will be persisted via the `VersalPlayerApi` instance by calling `this.player.setAttributes/setLearnerState`.
 
