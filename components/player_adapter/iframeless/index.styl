@@ -1,4 +1,55 @@
-.grid
+.controls
+  position absolute
+  top 10px
+  left 10px
+  width 300px
+
+.controls-enter {
+  left: -290px;
+  transition: left .15s;
+}
+
+.controls-enter.controls-enter-active {
+  left: 10px;
+}
+
+.controls-leave {
+  left: 10px;
+  transition: left .15s;
+}
+
+.controls-leave.controls-leave-active {
+  left: -290px;
+}
+
+.info
+  position absolute
+  top 10px
+  right 10px
+  width 300px
+
+  div
+    text-align right
+
+.info-enter {
+  right: -290px;
+  transition: right .15s;
+}
+
+.info-enter.info-enter-active {
+  right: 10px;
+}
+
+.info-leave {
+  right: 10px;
+  transition: right .15s;
+}
+
+.info-leave.info-leave-active {
+  right: -290px;
+}
+
+.crop-marks
   border-width 0px
   width 781px
   margin 0 auto

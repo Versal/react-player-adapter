@@ -19,6 +19,7 @@ class IframelessPlayerAPI extends EventEmitter {
       playerState.attributes = defaultAttributes;
     }
     this._injectGlobalStyles();
+    this._listenForPlayerEvents();
   }
 
   startListening() {
@@ -49,6 +50,13 @@ class IframelessPlayerAPI extends EventEmitter {
   watchBodyHeight() {}
 
   // Iframeless launcher specific API
+
+  _listenForPlayerEvents() {
+    document.body.addEventListener('toggleEdit', function() {
+      playerState.editable = !playerState.editable;
+      this.emit('editableChanged', { editable: playerState.editable });
+    }.bind(this));
+  }
 
   _injectGlobalStyles() {
     // Gadget theme locks this down but in the context of an iframeless
