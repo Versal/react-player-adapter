@@ -1,49 +1,57 @@
-$panelWidth = 300px
-$panelPadding = 10px
-$panelOffset = -320px
-$slideDuration = .15s
+// Some values for making panels that slide in and out
 
-.controls
-  padding $panelPadding
+$slideDurationSec = .15s
+
+$panelPaddingPx = 10px
+$sidePanelWidthPx = 300px
+$sidePanelSlideOffsetPx = -320px
+
+// Some base styling for panels
+
+.side-panel
+  padding $panelPaddingPx
   position absolute
+  width $sidePanelWidthPx
   top 0
+
+.side-panel-left
   left 0
-  width $panelWidth
+  div
+    text-align left
 
-.controls-enter
-  left $panelOffset
-  transition left $slideDuration
-
-.controls-enter.controls-enter-active
-  left 0
-
-.controls-leave
-  left 0
-  transition left $slideDuration
-
-.controls-leave.controls-leave-active
-  left $panelOffset
-
-.info
-  padding $panelPadding
-  position absolute
-  top 0
+.side-panel-right
   right 0
-  width $panelWidth
-
   div
     text-align right
 
-.info-enter
-  right $panelOffset
-  transition right $slideDuration
+// Animate panel sliding in from left
 
-.info-enter.info-enter-active
+.slide-panel-in-from-left-enter
+  left $sidePanelSlideOffsetPx
+  transition left $slideDurationSec
+
+.slide-panel-in-from-left-enter.slide-panel-in-from-left-enter-active
+  left 0
+
+.slide-panel-in-from-left-leave
+  left 0
+  transition left $slideDurationSec
+
+.slide-panel-in-from-left-leave.slide-panel-in-from-left-leave-active
+  left $sidePanelSlideOffsetPx
+
+// Animate panel sliding in from right
+
+.slide-panel-in-from-right-enter
+  right $sidePanelSlideOffsetPx
+  transition right $slideDurationSec
+
+.slide-panel-in-from-right-enter.slide-panel-in-from-right-enter-active
   right 0
 
-.info-leave
+.slide-panel-in-from-right-leave
   right 0
-  transition right $slideDuration
+  transition right $slideDurationSec
 
-.info-leave.info-leave-active
-  right $panelOffset
+.slide-panel-in-from-right-leave.slide-panel-in-from-right-leave-active
+  right $sidePanelSlideOffsetPx

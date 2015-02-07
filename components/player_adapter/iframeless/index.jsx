@@ -57,7 +57,7 @@ var DebugTools = React.createClass({
     var controls;
     if (this.state.showControls) {
       controls = (
-        <div key="controls" className="controls">
+        <div key="controls" className="controls side-panel side-panel-left">
           <button onClick={this._onToggleEdit}>toggle</button>
           <span><em>{editingIndicator}</em></span>
         </div>
@@ -67,7 +67,7 @@ var DebugTools = React.createClass({
     }
 
     return (
-      <ReactCSSTransitionGroup transitionName="controls">
+      <ReactCSSTransitionGroup transitionName="slide-panel-in-from-left">
         {controls}
       </ReactCSSTransitionGroup>
     );
@@ -78,7 +78,7 @@ var DebugTools = React.createClass({
 
     if (this.state.showControls) {
       info = (
-        <div key="info" className="info">
+        <div key="info" className="info side-panel side-panel-right">
           <div>
             {this.props.manifest.title} v{this.props.manifest.version}
           </div>
@@ -89,7 +89,7 @@ var DebugTools = React.createClass({
     }
 
     return (
-      <ReactCSSTransitionGroup transitionName="info">
+      <ReactCSSTransitionGroup transitionName="slide-panel-in-from-right">
         {info}
       </ReactCSSTransitionGroup>
     );
