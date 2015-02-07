@@ -3,7 +3,7 @@
 var React = require('react/addons');
 var PlayerAdapter = require('../index');
 
-var IframelessPlayerAPI = require('../../../lib/iframeless_player_api');
+var IframelessPlayerAPI = require('./player_api');
 
 require('./index.styl');
 
