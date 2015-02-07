@@ -8,6 +8,7 @@
 var _ = require('underscore');
 var runAsync = require('resistance');
 var React = require('react/addons');
+var VersalPlayerAPI = require('versal-gadget-api/src/player-api');
 
 var PlayerAdapter = React.createClass({
 
@@ -26,7 +27,8 @@ var PlayerAdapter = React.createClass({
   },
 
   propTypes: {
-    playerApi: React.PropTypes.object.isRequired,
+    debug: React.PropTypes.bool,
+    playerApi: React.PropTypes.object,
     propertySheets: React.PropTypes.object,
     // `PlayerAdapter` expects your app's root component as it's child, and
     // nothing else.
@@ -36,8 +38,9 @@ var PlayerAdapter = React.createClass({
   // Lifecycle
 
   componentWillMount: function() {
-    // Make a shorter ref because we work with it a lot
-    this.player = this.props.playerApi;
+    // If there's a passed in instance use it, otherwise make a new one
+    this.player = this.props.playerApi ||
+      new VersalPlayerAPI({ debug: this.props.debug });
 
     // Track all player state changes
     this.player.on('attributesChanged', this._onStateChange);

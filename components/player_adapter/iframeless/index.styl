@@ -1,0 +1,39 @@
+.grid
+  border-width 0px
+  width 781px
+  margin 0 auto
+  margin-top 10px
+
+  .corner
+    width 30px
+    height 30px
+    position relative
+
+    .crop-mark-shim
+      background-color white
+      position absolute
+      width 10px
+      height 10px
+
+    &.top
+      border-bottom 1px solid #e5e4e2
+      .crop-mark-shim
+        bottom -1px
+    &.bottom
+      border-top 1px solid #e5e4e2
+      .crop-mark-shim
+        top -1px
+
+    &.left
+      border-right 1px solid #e5e4e2
+      .crop-mark-shim
+        right -1px
+
+    &.right
+      border-left 1px solid #e5e4e2
+      .crop-mark-shim
+        left -1px
+
+  .body
+    .middle
+      position relative
