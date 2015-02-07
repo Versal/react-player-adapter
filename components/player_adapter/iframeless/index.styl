@@ -1,44 +1,49 @@
+$panelWidth = 300px
+$panelPadding = 10px
+$panelOffset = -320px
+$slideDuration = .15s
+
 .controls
-  padding 10px
+  padding $panelPadding
   position absolute
   top 0
   left 0
-  width 300px
+  width $panelWidth
 
 .controls-enter
-  left -320px
-  transition left .15s
+  left $panelOffset
+  transition left $slideDuration
 
 .controls-enter.controls-enter-active
   left 0
 
 .controls-leave
   left 0
-  transition left .15s
+  transition left $slideDuration
 
 .controls-leave.controls-leave-active
-  left -320px
+  left $panelOffset
 
 .info
-  padding 10px
+  padding $panelPadding
   position absolute
   top 0
   right 0
-  width 300px
+  width $panelWidth
 
   div
     text-align right
 
 .info-enter
-  right -320px
-  transition right .15s
+  right $panelOffset
+  transition right $slideDuration
 
 .info-enter.info-enter-active
   right 0
 
 .info-leave
   right 0
-  transition right .15s
+  transition right $slideDuration
 
 .info-leave.info-leave-active
-  right -320px
+  right $panelOffset
