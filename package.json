@@ -10,6 +10,7 @@
     "start": "./node_modules/karma/bin/karma start --auto-watch"
   },
   "dependencies": {
+    "react-localstorage": "possibilities/react-localstorage",
     "resistance": "jgallen23/resistance"
   },
   "peerDependencies": {

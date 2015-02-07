@@ -5,14 +5,17 @@
 
 var React = require('react/addons');
 var ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
-var PlayerAdapter = require('../index');
 
+var PlayerAdapter = require('../index');
+var LocalStorageMixin = require('react-localstorage');
 var IframelessPlayerAPI = require('./player_api');
 var CropMarks = require('../../crop_marks');
 
 require('./index.styl');
 
 var DebugTools = React.createClass({
+  mixins: [LocalStorageMixin],
+
   getInitialState: function() {
     return {
       showControls: false
@@ -21,7 +24,7 @@ var DebugTools = React.createClass({
 
   componentWillMount: function() {
     this.iframelessPlayerApi =
-      new IframelessPlayerAPI(this.props.manifest.defaultConfig);
+      new IframelessPlayerAPI(this.props.manifest);
 
     this.iframelessPlayerApi.on('editableChanged', this._onEditableChanged);
     this._listenForSecretHandshake();
@@ -30,8 +33,6 @@ var DebugTools = React.createClass({
   componentWillUnmount: function() {
     this._stopListeningForSecretHandshake();
   },
-
-  // A silly grid that is styled to look like crop marks around the gadget
 
   render: function() {
     return (
