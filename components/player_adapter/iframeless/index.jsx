@@ -14,6 +14,56 @@ var Keypress = require('mousetrap');
 
 require('./index.styl');
 
+var GadgetTools = React.createClass({
+  render: function() {
+    var editingIndicator = this.props.editable ? 'authoring' : 'learning';
+    var className = "gadget-controls side-panel side-panel-left";
+
+    var maybeComponent = null;
+
+    if (this.props.showControls) {
+      maybeComponent = (
+        <div key="controls" className={className}>
+          <div className="gadget-control-editing">
+            <button onClick={this.props.onToggleEdit}>toggle</button>
+            <span>{editingIndicator}</span>
+          </div>
+        </div>
+      );
+    }
+
+    return (
+      <ReactCSSTransitionGroup transitionName="slide-panel-in-from-left">
+        {maybeComponent}
+      </ReactCSSTransitionGroup>
+    );
+  }
+});
+
+var GadgetInfo = React.createClass({
+  render: function() {
+    var className = "gadget-info side-panel side-panel-right";
+
+    var maybeComponent = null;
+
+    if (this.props.showControls) {
+      maybeComponent = (
+        <div key="info" className={className}>
+          <div>
+            {this.props.manifest.title} v{this.props.manifest.version}
+          </div>
+        </div>
+      );
+    }
+
+    return (
+      <ReactCSSTransitionGroup transitionName="slide-panel-in-from-right">
+        {maybeComponent}
+      </ReactCSSTransitionGroup>
+    );
+  }
+});
+
 var DebugTools = React.createClass({
   mixins: [LocalStorageMixin],
 
@@ -27,10 +77,10 @@ var DebugTools = React.createClass({
     this.iframelessPlayerApi =
       new IframelessPlayerAPI(this.props.manifest);
 
-    this.iframelessPlayerApi.on('editableChanged', this._onEditableChanged);
-
     Keypress.bind('v z', this._onToggleControls);
     Keypress.bind('v e', this._onToggleEdit);
+
+    this.iframelessPlayerApi.on('editableChanged', this._onEditableChanged);
   },
 
   componentWillUnmount: function() {
@@ -43,9 +93,10 @@ var DebugTools = React.createClass({
   render: function() {
     return (
       <div>
-        <ReactCSSTransitionGroup transitionName="slide-panel-in-from-left">
-          {this._maybeRenderControls()}
-        </ReactCSSTransitionGroup>
+        <GadgetTools
+          {...this.props}
+          {...this.state}
+          onToggleEdit={this._onToggleEdit} />
 
         <CropMarks>
           <PlayerAdapter {...this.props} playerApi={this.iframelessPlayerApi}>
@@ -53,9 +104,9 @@ var DebugTools = React.createClass({
           </PlayerAdapter>
         </CropMarks>
 
-        <ReactCSSTransitionGroup transitionName="slide-panel-in-from-right">
-          {this._maybeRenderInfo()}
-        </ReactCSSTransitionGroup>
+        <GadgetInfo
+          {...this.props}
+          {...this.state} />
       </div>
     );
   },
@@ -70,39 +121,10 @@ var DebugTools = React.createClass({
     this.setState(editable);
   },
 
-  _maybeRenderControls: function() {
-    var editingIndicator = this.state.editable ? 'authoring' : 'learning';
-
-    if (this.state.showControls) {
-      return (
-        <div key="controls" className="controls side-panel side-panel-left">
-          <button onClick={this._onToggleEdit}>toggle</button>
-          <span><em>{editingIndicator}</em></span>
-        </div>
-      );
-    } else {
-      return null;
-    }
-  },
-
-  _maybeRenderInfo: function() {
-    if (this.state.showControls) {
-      return (
-        <div key="info" className="info side-panel side-panel-right">
-          <div>
-            {this.props.manifest.title} v{this.props.manifest.version}
-          </div>
-        </div>
-      );
-    } else {
-      return null;
-    }
-  },
-
   _onToggleEdit: function() {
     var event = new Event('toggleEdit');
     document.body.dispatchEvent(event);
-  },
+  }
 });
 
 module.exports = DebugTools;
