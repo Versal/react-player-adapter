@@ -37,13 +37,19 @@ var DebugTools = React.createClass({
   render: function() {
     return (
       <div>
-        {this._maybeRenderControls()}
+        <ReactCSSTransitionGroup transitionName="slide-panel-in-from-left">
+          {this._maybeRenderControls()}
+        </ReactCSSTransitionGroup>
+
         <CropMarks>
           <PlayerAdapter {...this.props} playerApi={this.iframelessPlayerApi}>
             {this.props.children}
           </PlayerAdapter>
         </CropMarks>
-        {this._maybeRenderInfo()}
+
+        <ReactCSSTransitionGroup transitionName="slide-panel-in-from-right">
+          {this._maybeRenderInfo()}
+        </ReactCSSTransitionGroup>
       </div>
     );
   },
@@ -55,30 +61,21 @@ var DebugTools = React.createClass({
   _maybeRenderControls: function() {
     var editingIndicator = this.state.editable ? 'authoring' : 'learning';
 
-    var controls;
     if (this.state.showControls) {
-      controls = (
+      return (
         <div key="controls" className="controls side-panel side-panel-left">
           <button onClick={this._onToggleEdit}>toggle</button>
           <span><em>{editingIndicator}</em></span>
         </div>
       );
     } else {
-      controls = null;
+      return null;
     }
-
-    return (
-      <ReactCSSTransitionGroup transitionName="slide-panel-in-from-left">
-        {controls}
-      </ReactCSSTransitionGroup>
-    );
   },
 
   _maybeRenderInfo: function() {
-    var info;
-
     if (this.state.showControls) {
-      info = (
+      return (
         <div key="info" className="info side-panel side-panel-right">
           <div>
             {this.props.manifest.title} v{this.props.manifest.version}
@@ -86,14 +83,8 @@ var DebugTools = React.createClass({
         </div>
       );
     } else {
-      info = null;
+      return null;
     }
-
-    return (
-      <ReactCSSTransitionGroup transitionName="slide-panel-in-from-right">
-        {info}
-      </ReactCSSTransitionGroup>
-    );
   },
 
   _onToggleEdit: function() {
