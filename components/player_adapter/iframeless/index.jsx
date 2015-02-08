@@ -10,6 +10,7 @@ var PlayerAdapter = require('../index');
 var LocalStorageMixin = require('react-localstorage');
 var IframelessPlayerAPI = require('./player_api');
 var CropMarks = require('../../crop_marks');
+var Keypress = require('mousetrap');
 
 require('./index.styl');
 
@@ -27,11 +28,14 @@ var DebugTools = React.createClass({
       new IframelessPlayerAPI(this.props.manifest);
 
     this.iframelessPlayerApi.on('editableChanged', this._onEditableChanged);
-    this._listenForSecretHandshake();
+
+    Keypress.bind('v z', this._onToggleControls);
+    Keypress.bind('v e', this._onToggleEdit);
   },
 
   componentWillUnmount: function() {
-    this._stopListeningForSecretHandshake();
+    Keypress.unbind('v z', this._onToggleControls);
+    Keypress.unbind('v e', this._onToggleEdit);
   },
 
   render: function() {
@@ -52,6 +56,12 @@ var DebugTools = React.createClass({
         </ReactCSSTransitionGroup>
       </div>
     );
+  },
+
+  _onToggleControls: function() {
+    this.setState({
+      showControls: !this.state.showControls
+    });
   },
 
   _onEditableChanged: function(editable) {
@@ -91,27 +101,6 @@ var DebugTools = React.createClass({
     var event = new Event('toggleEdit');
     document.body.dispatchEvent(event);
   },
-
-  _listenForSecretHandshake: function() {
-    document.body.addEventListener('keyup', function(e) {
-      if (e.which === 18) {
-        var now = new Date();
-        if (this._lastSecretKeyUp) {
-          var elapsed = (now.getTime() - this._lastSecretKeyUp.getTime());
-          if (elapsed <= 300) {
-            this.setState({
-              showControls: !this.state.showControls
-            });
-          }
-        }
-        this._lastSecretKeyUp = new Date();
-      }
-    }.bind(this));
-  },
-
-  _stopListeningForSecretHandshake: function() {
-    document.body.removeEventListener('keyup');
-  }
 });
 
 module.exports = DebugTools;

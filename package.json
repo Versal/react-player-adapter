@@ -10,6 +10,7 @@
     "start": "./node_modules/karma/bin/karma start --auto-watch"
   },
   "dependencies": {
+    "mousetrap": "~1.4.6",
     "react-localstorage": "possibilities/react-localstorage",
     "resistance": "jgallen23/resistance"
   },
