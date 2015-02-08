@@ -34,6 +34,8 @@ var DebugTools = React.createClass({
   },
 
   componentWillUnmount: function() {
+    this.iframelessPlayerApi.off('editableChanged', this._onEditableChanged);
+
     Keypress.unbind('v z', this._onToggleControls);
     Keypress.unbind('v e', this._onToggleEdit);
   },
