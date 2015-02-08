@@ -20,8 +20,17 @@ $slideDurationSec = .15s
 $panelPaddingPx = 10px
 $sidePanelWidthPx = 200px
 $sidePanelSlideOffsetPx = -220px
+$bottomPanelHeightPx = 300px
+$bottomPanelSlideOffsetPx = -320px;
 
 // Some base styling for panels
+
+.bottom-panel
+  padding $panelPaddingPx
+  position absolute
+  height $bottomPanelHeightPx
+  width 100%
+  bottom 0
 
 .side-panel
   padding $panelPaddingPx
@@ -70,3 +79,19 @@ $sidePanelSlideOffsetPx = -220px
 
 .slide-panel-in-from-right-leave.slide-panel-in-from-right-leave-active
   right $sidePanelSlideOffsetPx
+
+// Animate panel sliding in from bottom
+
+.slide-panel-in-from-bottom-enter
+  bottom $bottomPanelSlideOffsetPx
+  transition bottom $slideDurationSec
+
+.slide-panel-in-from-bottom-enter.slide-panel-in-from-bottom-enter-active
+  bottom 0
+
+.slide-panel-in-from-bottom-leave
+  bottom 0
+  transition bottom $slideDurationSec
+
+.slide-panel-in-from-bottom-leave.slide-panel-in-from-bottom-leave-active
+  bottom $bottomPanelSlideOffsetPx
