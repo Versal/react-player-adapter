@@ -17,14 +17,14 @@ require('./index.styl');
 var GadgetTools = React.createClass({
   render: function() {
     var editingIndicator = this.props.editable ? 'authoring' : 'learning';
-    var className = "gadget-controls side-panel side-panel-left";
+    var className = "gadget-gadget-tools side-panel side-panel-left";
 
     var maybeComponent = null;
 
-    if (this.props.showControls) {
+    if (this.props.showGadgetTools) {
       maybeComponent = (
-        <div key="controls" className={className}>
-          <div className="gadget-control-editing">
+        <div key="gadget-tools" className={className}>
+          <div className="gadget-gadget-tool-editing">
             <button onClick={this.props.onToggleEdit}>toggle</button>
             <span>{editingIndicator}</span>
           </div>
@@ -46,7 +46,7 @@ var GadgetInfo = React.createClass({
 
     var maybeComponent = null;
 
-    if (this.props.showControls) {
+    if (this.props.showGadgetTools) {
       maybeComponent = (
         <div key="info" className={className}>
           <div>
@@ -69,7 +69,7 @@ var DebugTools = React.createClass({
 
   getInitialState: function() {
     return {
-      showControls: false
+      showGadgetTools: false
     };
   },
 
@@ -77,7 +77,7 @@ var DebugTools = React.createClass({
     this.iframelessPlayerApi =
       new IframelessPlayerAPI(this.props.manifest);
 
-    Keypress.bind('v z', this._onToggleControls);
+    Keypress.bind('v z', this._onToggleGadgetTools);
     Keypress.bind('v e', this._onToggleEdit);
 
     this.iframelessPlayerApi.on('editableChanged', this._onEditableChanged);
@@ -86,7 +86,7 @@ var DebugTools = React.createClass({
   componentWillUnmount: function() {
     this.iframelessPlayerApi.off('editableChanged', this._onEditableChanged);
 
-    Keypress.unbind('v z', this._onToggleControls);
+    Keypress.unbind('v z', this._onToggleGadgetTools);
     Keypress.unbind('v e', this._onToggleEdit);
   },
 
@@ -111,9 +111,9 @@ var DebugTools = React.createClass({
     );
   },
 
-  _onToggleControls: function() {
+  _onToggleGadgetTools: function() {
     this.setState({
-      showControls: !this.state.showControls
+      showGadgetTools: !this.state.showGadgetTools
     });
   },
 
