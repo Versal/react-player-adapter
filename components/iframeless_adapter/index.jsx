@@ -6,10 +6,11 @@
 var React = require('react/addons');
 var ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
 
-var PlayerAdapter = require('../index');
+var PlayerAdapter = require('../player_adapter/index');
 var LocalStorageMixin = require('react-localstorage');
 var IframelessPlayerAPI = require('./player_api');
-var CropMarks = require('../../crop_marks');
+var CropMarks = require('../crop_marks');
+
 var Keypress = require('mousetrap');
 
 require('./index.styl');
@@ -64,7 +65,7 @@ var GadgetInfo = React.createClass({
   }
 });
 
-var DebugTools = React.createClass({
+var IframelessAdapter = React.createClass({
   mixins: [LocalStorageMixin],
 
   getInitialState: function() {
@@ -127,4 +128,4 @@ var DebugTools = React.createClass({
   }
 });
 
-module.exports = DebugTools;
+module.exports = IframelessAdapter;
