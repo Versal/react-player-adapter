@@ -32,27 +32,50 @@ var IframelessAdapter = React.createClass({
     Keypress.bind('v z', this._onToggleGadgetTools);
     Keypress.bind('v e', this._onToggleEdit);
 
-    this.iframelessPlayerApi.on('editableChanged', this._onEditableChanged);
+    this.iframelessPlayerApi.on(
+      'editableChanged',
+      this.setState.bind(this)
+    );
+
+    this.iframelessPlayerApi.on(
+      'attributesChanged',
+      this.setState.bind(this)
+    );
   },
 
   componentWillUnmount: function() {
-    this.iframelessPlayerApi.off('editableChanged', this._onEditableChanged);
+    this.iframelessPlayerApi.off(
+      'editableChanged',
+      this.setState.bind(this)
+    );
+    this.iframelessPlayerApi.off(
+      'attributesChanged',
+      this.setState.bind(this)
+    );
 
     Keypress.unbind('v z', this._onToggleGadgetTools);
     Keypress.unbind('v e', this._onToggleEdit);
   },
 
   render: function() {
+    var setAttributes = this
+                          .iframelessPlayerApi
+                          .setAttributes
+                          .bind(this.iframelessPlayerApi);
+
     return (
       <div>
         <GadgetTools
           {...this.props}
           {...this.state}
+          setAttributes={setAttributes}
           onToggleEdit={this._onToggleEdit} />
 
         <CropMarks>
-          <PlayerAdapter {...this.props} playerApi={this.iframelessPlayerApi}>
-            {this.props.children}
+          <PlayerAdapter
+            {...this.props}
+            playerApi={this.iframelessPlayerApi}>
+              {this.props.children}
           </PlayerAdapter>
         </CropMarks>
 
@@ -67,10 +90,6 @@ var IframelessAdapter = React.createClass({
     this.setState({
       showGadgetTools: !this.state.showGadgetTools
     });
-  },
-
-  _onEditableChanged: function(editable) {
-    this.setState(editable);
   },
 
   _onToggleEdit: function() {

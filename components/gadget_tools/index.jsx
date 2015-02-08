@@ -1,21 +1,27 @@
 'use strict';
 
+var _ = require('underscore');
 var React = require('react/addons');
 var ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
+
+var humanize = require("underscore.string/humanize");
 
 var GadgetTools = React.createClass({
   render: function() {
     var editingIndicator = this.props.editable ? 'authoring' : 'learning';
-    var className = "gadget-gadget-tools side-panel side-panel-left";
+    var className = "gadget-tools side-panel side-panel-left";
 
     var maybeComponent = null;
 
     if (this.props.showGadgetTools) {
       maybeComponent = (
         <div key="gadget-tools" className={className}>
-          <div className="gadget-gadget-tool-editing">
+          <div className="gadget-tool-editing">
             <button onClick={this.props.onToggleEdit}>toggle</button>
             <span>{editingIndicator}</span>
+          </div>
+          <div className="gadget-tool-property-sheets">
+            {_.map(this.props.propertySheets, this._renderPropertySheet)}
           </div>
         </div>
       );
@@ -26,6 +32,40 @@ var GadgetTools = React.createClass({
         {maybeComponent}
       </ReactCSSTransitionGroup>
     );
+  },
+
+  _renderPropertySheet: function(config, name) {
+    var options = config.options.map(function(value, key) {
+      var optionProps = { value, key };
+      return (
+        <option {...optionProps}>{value}</option>
+      );
+    });
+
+    var selectProps = {
+      defaultValue: this.props[name],
+      ref: name,
+      onChange: _.partial(this._onChange, name)
+    };
+
+    var selectWidget = (
+      <select {...selectProps}>
+        {options}
+      </select>
+    );
+
+    return (
+      <div>
+        <div>{humanize(name)}</div>
+        <div>{selectWidget}</div>
+      </div>
+    );
+  },
+
+  _onChange: function(name) {
+    var attributes = {};
+    attributes[name] = this.refs[name].getDOMNode().value;
+    this.props.setAttributes(attributes);
   }
 });
 

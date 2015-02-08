@@ -11,29 +11,30 @@ var EventEmitter = require('events').EventEmitter;
 var emptyPlayerState = {
   learnerState: {},
   attributes: {},
-  editable: false
+  editable: { editable: false }
 };
 
 class IframelessPlayerAPI extends EventEmitter {
   constructor(config) {
-    // Fix legacy naming
+    // Fix legacy naming and provide default to the default
     var defaultAttributes = config.defaultConfig || {};
 
-    // We're grabbing the latest state from localstorage which is saved by
-    // a react mixin.
-    // TODO Needs to be clearable
-    var key = `PlayerAdapter-${config.name}`;
+    this.localStorageKey = `IframelessPlayerAPI-${config.name}`;
+
     var savedState = {};
-    if (localStorage[key]) {
+    if (localStorage[this.localStorageKey]) {
       try {
-        savedState = JSON.parse(localStorage[key]);
+        savedState = JSON.parse(localStorage[this.localStorageKey]);
       } catch (error) {
         console.error(error);
       }
     }
 
     // Make sure we have sensible defaults if nothing's been saved
-    this.playerState = _.defaults(savedState, emptyPlayerState);
+    this.playerState = _.defaults(
+      savedState,
+      emptyPlayerState
+    );
 
     // Make sure defaults from the config are applied
     if (defaultAttributes) {
@@ -51,23 +52,37 @@ class IframelessPlayerAPI extends EventEmitter {
     _.defer(function() {
       this.emit('attributesChanged', this.playerState.attributes);
       this.emit('learnerStateChanged', this.playerState.learnerState);
-      this.emit('editableChanged', { editable: this.playerState.editable });
+      this.emit('editableChanged', this.playerState.editable);
     }.bind(this));
   }
 
   setAttributes(attributes) {
     _.defer(function() {
-      attributes = _.extend({}, this.playerState.attributes, attributes);
-      this.playerState.attributes = attributes;
-      this.emit('attributesChanged', attributes);
+      attributes = _.extend(
+        {},
+        this.playerState.attributes,
+        attributes
+      );
+
+      this._setPlayerState(
+        'attributes',
+        attributes
+      );
     }.bind(this));
   }
 
   setLearnerState(learnerState) {
     _.defer(function() {
-      learnerState = _.extend({}, this.playerState.learnerState, learnerState);
-      this.playerState.learnerState = learnerState;
-      this.emit('learnerStateChanged', learnerState);
+      learnerState = _.extend(
+        {},
+        this.playerState.learnerState,
+        learnerState
+      );
+
+      this._setPlayerState(
+        'learnerState',
+        learnerState
+      );
     }.bind(this));
   }
 
@@ -78,9 +93,17 @@ class IframelessPlayerAPI extends EventEmitter {
 
   _listenForPlayerEvents() {
     document.body.addEventListener('toggleEdit', function() {
-      this.playerState.editable = !this.playerState.editable;
-      this.emit('editableChanged', { editable: this.playerState.editable });
+      this._setPlayerState(
+        'editable',
+        { editable: !this.playerState.editable.editable }
+      );
     }.bind(this));
+  }
+
+  _setPlayerState(name, value) {
+    this.playerState[name] = value;
+    this.emit(`${name}Changed`, value);
+    localStorage[this.localStorageKey] = JSON.stringify(this.playerState);
   }
 
   _injectGlobalStyles() {

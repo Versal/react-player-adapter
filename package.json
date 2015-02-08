@@ -11,8 +11,9 @@
   },
   "dependencies": {
     "mousetrap": "~1.4.6",
-    "react-localstorage": "possibilities/react-localstorage",
-    "resistance": "jgallen23/resistance"
+    "react-localstorage": "~0.1.1",
+    "resistance": "jgallen23/resistance",
+    "underscore.string": "~3.0.3"
   },
   "peerDependencies": {
     "react": "~0.12.2",
