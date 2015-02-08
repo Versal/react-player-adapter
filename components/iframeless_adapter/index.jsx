@@ -4,66 +4,17 @@
 /* global Event */
 
 var React = require('react/addons');
-var ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
 
 var PlayerAdapter = require('../player_adapter/index');
 var LocalStorageMixin = require('react-localstorage');
 var IframelessPlayerAPI = require('./player_api');
 var CropMarks = require('../crop_marks');
+var GadgetTools = require('../gadget_tools');
+var GadgetInfo = require('../gadget_info');
 
 var Keypress = require('mousetrap');
 
 require('./index.styl');
-
-var GadgetTools = React.createClass({
-  render: function() {
-    var editingIndicator = this.props.editable ? 'authoring' : 'learning';
-    var className = "gadget-gadget-tools side-panel side-panel-left";
-
-    var maybeComponent = null;
-
-    if (this.props.showGadgetTools) {
-      maybeComponent = (
-        <div key="gadget-tools" className={className}>
-          <div className="gadget-gadget-tool-editing">
-            <button onClick={this.props.onToggleEdit}>toggle</button>
-            <span>{editingIndicator}</span>
-          </div>
-        </div>
-      );
-    }
-
-    return (
-      <ReactCSSTransitionGroup transitionName="slide-panel-in-from-left">
-        {maybeComponent}
-      </ReactCSSTransitionGroup>
-    );
-  }
-});
-
-var GadgetInfo = React.createClass({
-  render: function() {
-    var className = "gadget-info side-panel side-panel-right";
-
-    var maybeComponent = null;
-
-    if (this.props.showGadgetTools) {
-      maybeComponent = (
-        <div key="gadget-info" className={className}>
-          <div>
-            {this.props.manifest.title} v{this.props.manifest.version}
-          </div>
-        </div>
-      );
-    }
-
-    return (
-      <ReactCSSTransitionGroup transitionName="slide-panel-in-from-right">
-        {maybeComponent}
-      </ReactCSSTransitionGroup>
-    );
-  }
-});
 
 var IframelessAdapter = React.createClass({
   mixins: [LocalStorageMixin],
