@@ -48,7 +48,7 @@ var GadgetInfo = React.createClass({
 
     if (this.props.showGadgetTools) {
       maybeComponent = (
-        <div key="info" className={className}>
+        <div key="gadget-info" className={className}>
           <div>
             {this.props.manifest.title} v{this.props.manifest.version}
           </div>
