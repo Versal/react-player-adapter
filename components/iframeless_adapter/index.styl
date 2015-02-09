@@ -14,6 +14,19 @@
     margin-top 10px
 
 .gadget-console
+  .console-menu
+    border-bottom 1px solid lightgrey
+    padding 10px
+    .console-menu-item
+      text-decoration none
+      padding-right 10px
+      font-weight bold
+      &.console-menu-item-selected
+        font-weight normal
+
+  .console-body
+    padding 10px
+
   background-color white
   border-top 1px solid lightgrey
 
@@ -24,7 +37,8 @@
 
 $slideDurationSec = .15s
 
-$panelPaddingPx = 10px
+$sidePanelPaddingPx = 10px
+$bottomPanelPaddingPx = '0 10px'
 $sidePanelWidthPx = 200px
 $sidePanelSlideOffsetPx = -220px
 $bottomPanelHeightPx = 300px
@@ -33,14 +47,14 @@ $bottomPanelSlideOffsetPx = -320px;
 // Some base styling for panels
 
 .bottom-panel
-  padding $panelPaddingPx
+  padding $bottomPanelPaddingPx
   position absolute
   height $bottomPanelHeightPx
   width 100%
   bottom 0
 
 .side-panel
-  padding $panelPaddingPx
+  padding $sidePanelPaddingPx
   position absolute
   width $sidePanelWidthPx
   top 0

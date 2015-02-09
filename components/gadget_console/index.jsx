@@ -7,6 +7,12 @@ var React = require('react/addons');
 var ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
 
 var GadgetConsole = React.createClass({
+  getInitialState: function() {
+    return {
+      currentPanel: 'state'
+    };
+  },
+
   render: function() {
     var maybeComponent = null;
 
@@ -16,22 +22,59 @@ var GadgetConsole = React.createClass({
         localStorage[`IframelessStates-${this.props.manifest.name}`] || '[]'
       );
 
+      var onNavToState = _.partial(this._onNavigation, 'state');
+      var onNavToProfiler = _.partial(this._onNavigation, 'profiler');
+
+      var stateNavClassNames = 'console-menu-item';
+      if (this.state.currentPanel === 'state') {
+        stateNavClassNames += ' console-menu-item-selected';
+      }
+      var profilerNavClassNames = 'console-menu-item';
+      if (this.state.currentPanel === 'profiler') {
+        profilerNavClassNames += ' console-menu-item-selected';
+      }
+
+      var body = null;
+      if (this.state.currentPanel === 'state') {
+        body = (
+          <div>
+            <div>
+              <button onClick={this.props.onClearState}>
+                clear state
+              </button>
+              <button onClick={this.onSaveState}>
+                save state
+              </button>
+            </div>
+            <br />
+            <div className="saved-states">
+              {_.map(
+                savedStates,
+                this._renderSavedState)
+              }
+            </div>
+          </div>
+        );
+      } else if (this.state.currentPanel === 'profiler') {
+        body = (
+          <div>
+            TODO profiler
+          </div>
+        );
+      }
+
       maybeComponent = (
         <div key="gadget-console" className={className}>
-          <div>
-            <button onClick={this.props.onClearState}>
-              clear state
-            </button>
-            <button onClick={this.onSaveState}>
-              save state
-            </button>
+          <div className="console-menu">
+            <a onClick={onNavToState} href="#" className={stateNavClassNames}>
+              state
+            </a>
+            <a onClick={onNavToProfiler} href="#" className={profilerNavClassNames}>
+              profiler
+            </a>
           </div>
-          <br />
-          <div className="saved-states">
-            {_.map(
-              savedStates,
-              this._renderSavedState)
-            }
+          <div className="console-body">
+            {body}
           </div>
         </div>
       );
@@ -113,6 +156,12 @@ var GadgetConsole = React.createClass({
     );
 
     this.forceUpdate();
+  },
+
+  _onNavigation: function(panelName, e) {
+    this.setState({ currentPanel: panelName });
+    e.preventDefault();
+    e.target.blur();
   }
 });
 
