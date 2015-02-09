@@ -3,8 +3,8 @@
 /* global document */
 /* global Event */
 /* global localStorage */
-/* global window */
 
+var _ = require('underscore');
 var React = require('react/addons');
 
 var PlayerAdapter = require('../player_adapter/index');
@@ -24,6 +24,7 @@ var IframelessAdapter = React.createClass({
 
   getInitialState: function() {
     return {
+      attributes: {},
       showGadgetTools: false,
       showGadgetConsole: false
     };
@@ -39,13 +40,19 @@ var IframelessAdapter = React.createClass({
 
     this.iframelessPlayerApi.on(
       'editableChanged',
-      this.setState.bind(this)
+      _.partial(this.setPlayerState, 'editable')
     );
 
     this.iframelessPlayerApi.on(
       'attributesChanged',
-      this.setState.bind(this)
+      _.partial(this.setPlayerState, 'attributes')
     );
+  },
+
+  setPlayerState: function(type, data) {
+    var state = {};
+    state[type] = data;
+    this.setState(state);
   },
 
   componentWillUnmount: function() {
@@ -108,8 +115,22 @@ var IframelessAdapter = React.createClass({
   },
 
   _onClearState: function() {
-    localStorage.clear();
-    window.location.reload();
+    var appEl = document.querySelector('.app');
+    React.unmountComponentAtNode(appEl);
+
+    var data = JSON.parse(localStorage.IframelessAdapter);
+    var newData = _.omit(data, ['attributes', 'editable']);
+    localStorage.IframelessAdapter = JSON.stringify(newData);
+
+    localStorage.removeItem(`PlayerAdapter-${this.props.manifest.name}`);
+    localStorage.removeItem(`IframelessPlayerAPI-${this.props.manifest.name}`);
+
+    // You can't do this in modern versions of React. Is there a new public
+    // API? Or should we use replaceProps somehow?
+    React.render(React.addons.cloneWithProps(this._currentElement), appEl);
+
+    this.iframelessPlayerApi.emit('attributesChanged', this.state.attributes);
+    this.iframelessPlayerApi.emit('editableChanged', this.state.editable);
   }
 });
 

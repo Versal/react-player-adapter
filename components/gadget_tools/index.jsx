@@ -7,8 +7,14 @@ var ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
 var humanize = require("underscore.string/humanize");
 
 var GadgetTools = React.createClass({
+  getDefaultProps: function() {
+    return {
+      editable: {}
+    };
+  },
+
   render: function() {
-    var editingIndicator = this.props.editable ? 'authoring' : 'learning';
+    var editingIndicator = this.props.editable.editable ? 'authoring' : 'learning';
     var className = "gadget-tools side-panel side-panel-left";
 
     var maybeComponent = null;
@@ -43,8 +49,8 @@ var GadgetTools = React.createClass({
     });
 
     var selectProps = {
-      defaultValue: this.props[name],
       ref: name,
+      value: this.props.attributes[name],
       onChange: _.partial(this._onChange, name)
     };
 

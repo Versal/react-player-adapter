@@ -13,9 +13,10 @@ var GadgetConsole = React.createClass({
       maybeComponent = (
         <div key="gadget-console" className={className}>
           <div>
-            <h2>States</h2>
             <div>
-              <button onClick={this.props.onClearState}>Clear</button>
+              <button onClick={this.props.onClearState}>
+                Clear state
+              </button>
             </div>
           </div>
         </div>
