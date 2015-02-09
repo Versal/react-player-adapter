@@ -55,7 +55,7 @@ var GadgetTools = React.createClass({
     );
 
     return (
-      <div>
+      <div key={name}>
         <div>{humanize(name)}</div>
         <div>{selectWidget}</div>
       </div>
