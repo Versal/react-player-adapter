@@ -92,7 +92,8 @@ var IframelessAdapter = React.createClass({
         <GadgetConsole
           {...this.props}
           {...this.state}
-          onClearState={this._onClearState} />
+          onClearState={this._onClearState}
+          onRestoreState={this._onRestoreState} />
       </div>
     );
   },
@@ -112,6 +113,31 @@ var IframelessAdapter = React.createClass({
   _onToggleEdit: function() {
     var event = new Event('toggleEdit');
     document.body.dispatchEvent(event);
+  },
+
+  _onRestoreState: function(state) {
+    var appEl = document.querySelector('.app');
+    React.unmountComponentAtNode(appEl);
+
+    var data = JSON.parse(localStorage.IframelessAdapter);
+    var newData = _.omit(data, ['attributes', 'editable']);
+    localStorage.IframelessAdapter = JSON.stringify(newData);
+
+    localStorage.removeItem(`PlayerAdapter-${this.props.manifest.name}`);
+    localStorage.removeItem(`IframelessPlayerAPI-${this.props.manifest.name}`);
+
+    localStorage.setItem(
+      `IframelessPlayerAPI-${this.props.manifest.name}`,
+      JSON.stringify(state)
+    );
+
+    // You can't do this in modern versions of React. Is there a new public
+    // API? Or should we use replaceProps somehow?
+    React.render(React.addons.cloneWithProps(this._currentElement), appEl);
+
+    this.iframelessPlayerApi.emit('attributesChanged', this.state.attributes);
+    this.iframelessPlayerApi.emit('editableChanged', this.state.editable);
+
   },
 
   _onClearState: function() {
