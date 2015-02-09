@@ -80,6 +80,7 @@ var IframelessAdapter = React.createClass({
         <CropMarks>
           <PlayerAdapter
             {...this.props}
+            ref="playerAdapter"
             playerApi={this.iframelessPlayerApi}>
               {this.props.children}
           </PlayerAdapter>
@@ -115,48 +116,23 @@ var IframelessAdapter = React.createClass({
     document.body.dispatchEvent(event);
   },
 
-  _onRestoreState: function(state) {
-    var appEl = document.querySelector('.app');
-    React.unmountComponentAtNode(appEl);
-
-    var data = JSON.parse(localStorage.IframelessAdapter);
-    var newData = _.omit(data, ['attributes', 'editable']);
-    localStorage.IframelessAdapter = JSON.stringify(newData);
-
-    localStorage.removeItem(`PlayerAdapter-${this.props.manifest.name}`);
-    localStorage.removeItem(`IframelessPlayerAPI-${this.props.manifest.name}`);
-
-    localStorage.setItem(
-      `IframelessPlayerAPI-${this.props.manifest.name}`,
-      JSON.stringify(state)
+  _onRestoreState: function(rawState) {
+    var state = _.extend(
+      {},
+      rawState.attributes,
+      rawState.learnerState,
+      rawState.editable
     );
 
-    // You can't do this in modern versions of React. Is there a new public
-    // API? Or should we use replaceProps somehow?
-    React.render(React.addons.cloneWithProps(this._currentElement), appEl);
-
-    this.iframelessPlayerApi.emit('attributesChanged', this.state.attributes);
-    this.iframelessPlayerApi.emit('editableChanged', this.state.editable);
-
+    this.refs.playerAdapter.setState(state);
   },
 
   _onClearState: function() {
-    var appEl = document.querySelector('.app');
-    React.unmountComponentAtNode(appEl);
-
-    var data = JSON.parse(localStorage.IframelessAdapter);
-    var newData = _.omit(data, ['attributes', 'editable']);
-    localStorage.IframelessAdapter = JSON.stringify(newData);
-
-    localStorage.removeItem(`PlayerAdapter-${this.props.manifest.name}`);
-    localStorage.removeItem(`IframelessPlayerAPI-${this.props.manifest.name}`);
-
-    // You can't do this in modern versions of React. Is there a new public
-    // API? Or should we use replaceProps somehow?
-    React.render(React.addons.cloneWithProps(this._currentElement), appEl);
-
-    this.iframelessPlayerApi.emit('attributesChanged', this.state.attributes);
-    this.iframelessPlayerApi.emit('editableChanged', this.state.editable);
+    this.refs.playerAdapter.setState({
+      attributes: {},
+      learnerState: {},
+      editable: false
+    });
   }
 });
 
