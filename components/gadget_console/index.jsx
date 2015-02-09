@@ -37,9 +37,9 @@ var GadgetConsole = React.createClass({
         profilerNavClassNames += ' console-menu-item-selected';
       }
 
-      var body = null;
+      var panelComponent = null;
       if (this.state.currentPanel === 'state') {
-        body = (
+        panelComponent = (
           <div>
             <div>
               <button onClick={this.props.onClearState}>
@@ -59,7 +59,7 @@ var GadgetConsole = React.createClass({
           </div>
         );
       } else if (this.state.currentPanel === 'profiler') {
-        body = (
+        panelComponent = (
           <div>
             TODO profiler
           </div>
@@ -77,7 +77,7 @@ var GadgetConsole = React.createClass({
             </a>
           </div>
           <div className="console-body">
-            {body}
+            {panelComponent}
           </div>
         </div>
       );
