@@ -1,8 +1,10 @@
+$borderColor = #c7c3be;
+
 .gadget-tools
   hr
     height 1px
     border-width 0
-    background lightgrey
+    background $borderColor
     width 100%
     margin-bottom 15px
 
@@ -15,7 +17,8 @@
 
 .gadget-console
   .console-menu
-    border-bottom 1px solid lightgrey
+    height 25px
+    border-bottom 1px solid $borderColor
     padding 10px
     font-weight bold
     .console-menu-item
@@ -25,10 +28,26 @@
         color #385455
 
   .console-body
+    height 285px
+    overflow scroll
+
     padding 10px
 
+    .wasted-render-empty
+      margin-top 10px
+      font-style italic
+    .wasted-render-results
+      margin-top 10px
+      width 100%
+      td, th
+        padding 5px
+        border 1px solid $borderColor
+      .wasted-render-footer
+        text-align right
+        font-style italic
+
   background-color white
-  border-top 1px solid lightgrey
+  border-top 1px solid $borderColor
 
   .saved-states > div
     margin-bottom 10px
@@ -41,14 +60,14 @@ $sidePanelPaddingPx = 10px
 $bottomPanelPaddingPx = '0 10px'
 $sidePanelWidthPx = 200px
 $sidePanelSlideOffsetPx = -220px
-$bottomPanelHeightPx = 300px
+$bottomPanelHeightPx = 350px
 $bottomPanelSlideOffsetPx = -320px;
 
 // Some base styling for panels
 
 .bottom-panel
   padding $bottomPanelPaddingPx
-  position absolute
+  position fixed
   height $bottomPanelHeightPx
   width 100%
   bottom 0

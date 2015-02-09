@@ -6,6 +6,7 @@ var _ = require('underscore');
 var React = require('react/addons');
 var ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
 var LocalStorageMixin = require('react-localstorage');
+var WastedRenderResults = require('../wasted_render_results');
 
 var GadgetConsole = React.createClass({
   mixins: [LocalStorageMixin],
@@ -13,8 +14,17 @@ var GadgetConsole = React.createClass({
   getInitialState: function() {
     return {
       currentPanel: 'state',
-      isProfiling: false
+      isProfiling: false,
+      isReportReady: false
     };
+  },
+
+  componentWillMount: function() {
+    // Fighting against localstorage mixin
+    this.setState({
+      isProfiling: false,
+      isReportReady: false
+    });
   },
 
   render: function() {
@@ -60,17 +70,23 @@ var GadgetConsole = React.createClass({
           </div>
         );
       } else if (this.state.currentPanel === 'profiler') {
+        var maybeProfileResultsComponent = null;
+        if (this.state.isReportReady) {
+          maybeProfileResultsComponent = (
+            <WastedRenderResults />
+          );
+        }
+
+
+        var label = this.state.isProfiling ? 'stop' : 'start';
+        var maybeSpinner = this.state.isProfiling ? 'profiling...' : null;
         panelComponent = (
           <div>
             <div>
-              <button onClick={this._onStartProfiler}>
-                start
-              </button>
-              <button onClick={this._onStopProfiler}>
-                stop
-              </button>
-
-              <div>profiling: {this.state.isProfiling ? 'yes' : 'no'}</div>
+              <button onClick={this._onToggleProfiling}>
+                {label}
+              </button> {maybeSpinner}
+              {maybeProfileResultsComponent}
             </div>
           </div>
         );
@@ -177,24 +193,24 @@ var GadgetConsole = React.createClass({
     e.target.blur();
   },
 
-  _onStartProfiler: function() {
-    this.setState({ isProfiling: true });
-    React.addons.Perf.start();
-  },
+  _onToggleProfiling: function() {
+    if (this.state.isProfiling) {
 
-  _onStopProfiler: function() {
-    var isProfiling = this.state.isProfiling;
-    this.setState({ isProfiling: false });
+      this.setState({
+        isProfiling: false,
+        isReportReady: true
+      });
 
-    if (!isProfiling) {
-      return alert('You hafta start before you can stop');
-    } else {
       React.addons.Perf.stop();
       React.addons.Perf.printWasted();
+    } else {
 
-      setTimeout(function() {
-        alert('See the console for profiling results');
-      }, 1);
+      this.setState({
+        isProfiling: true,
+        isReportReady: false
+      });
+
+      React.addons.Perf.start();
     }
   }
 });
