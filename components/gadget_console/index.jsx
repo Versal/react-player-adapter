@@ -5,8 +5,11 @@
 var _ = require('underscore');
 var React = require('react/addons');
 var ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
+var LocalStorageMixin = require('react-localstorage');
 
 var GadgetConsole = React.createClass({
+  mixins: [LocalStorageMixin],
+
   getInitialState: function() {
     return {
       currentPanel: 'state'
