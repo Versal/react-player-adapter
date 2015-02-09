@@ -12,7 +12,8 @@ var GadgetConsole = React.createClass({
 
   getInitialState: function() {
     return {
-      currentPanel: 'state'
+      currentPanel: 'state',
+      isProfiling: false
     };
   },
 
@@ -61,7 +62,16 @@ var GadgetConsole = React.createClass({
       } else if (this.state.currentPanel === 'profiler') {
         panelComponent = (
           <div>
-            TODO profiler
+            <div>
+              <button onClick={this._onStartProfiler}>
+                start
+              </button>
+              <button onClick={this._onStopProfiler}>
+                stop
+              </button>
+
+              <div>profiling: {this.state.isProfiling ? 'yes' : 'no'}</div>
+            </div>
           </div>
         );
       }
@@ -165,6 +175,27 @@ var GadgetConsole = React.createClass({
     this.setState({ currentPanel: panelName });
     e.preventDefault();
     e.target.blur();
+  },
+
+  _onStartProfiler: function() {
+    this.setState({ isProfiling: true });
+    React.addons.Perf.start();
+  },
+
+  _onStopProfiler: function() {
+    var isProfiling = this.state.isProfiling;
+    this.setState({ isProfiling: false });
+
+    if (!isProfiling) {
+      return alert('You hafta start before you can stop');
+    } else {
+      React.addons.Perf.stop();
+      React.addons.Perf.printWasted();
+
+      setTimeout(function() {
+        alert('See the console for profiling results');
+      }, 1);
+    }
   }
 });
 
