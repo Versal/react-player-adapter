@@ -49,14 +49,7 @@ var IframelessAdapter = React.createClass({
   },
 
   componentWillUnmount: function() {
-    this.iframelessPlayerApi.off(
-      'editableChanged',
-      this.setState.bind(this)
-    );
-    this.iframelessPlayerApi.off(
-      'attributesChanged',
-      this.setState.bind(this)
-    );
+    this.iframelessPlayerApi.removeAllListeners();
 
     Keypress.unbind('v z', this._onToggleGadgetTools);
     Keypress.unbind('v c', this._onToggleGadgetConsole);
