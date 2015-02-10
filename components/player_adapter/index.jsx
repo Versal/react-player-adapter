@@ -9,12 +9,8 @@ var _ = require('underscore');
 var runAsync = require('resistance');
 var React = require('react/addons');
 var VersalPlayerAPI = require('versal-gadget-api/src/player-api');
-var LocalStorageMixin = require('react-localstorage');
 
 var PlayerAdapter = React.createClass({
-  // TODO turn this off when not iframeless?
-  mixins: [LocalStorageMixin],
-
   // Setup
 
   getInitialState: function() {
@@ -27,10 +23,6 @@ var PlayerAdapter = React.createClass({
     return {
       propertySheets: {}
     };
-  },
-
-  getLocalStorageKey: function() {
-    return `PlayerAdapter-${this.props.manifest.name}`;
   },
 
   propTypes: {
