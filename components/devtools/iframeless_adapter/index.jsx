@@ -6,7 +6,7 @@
 var _ = require('underscore');
 var React = require('react/addons');
 
-var PlayerAdapter = require('../player_adapter/index');
+var PlayerAdapter = require('../../player_adapter/index');
 var LocalStorageMixin = require('react-localstorage');
 var IframelessPlayerAPI = require('./player_api');
 var CropMarks = require('../crop_marks');
