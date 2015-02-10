@@ -13,11 +13,11 @@
     "mousetrap": "~1.4.6",
     "react-localstorage": "~0.1.1",
     "resistance": "jgallen23/resistance",
+    "underscore": "~1.7.0",
     "underscore.string": "~3.0.3"
   },
   "peerDependencies": {
-    "react": "~0.12.2",
-    "underscore": "~1.7.0"
+    "react": "~0.12.2"
   },
   "devDependencies": {
     "chai": "~1.10.0",
