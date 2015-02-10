@@ -1,0 +1,6 @@
+{
+  "name": "react-gadget-tools",
+  "dependencies": {
+    "versal-gadget-api": "~0.0.11"
+  }
+}

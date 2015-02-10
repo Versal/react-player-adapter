@@ -13,6 +13,8 @@ An adapater component for React apps that makes it easy to integrate with a `Ver
 Watch and run tests.
 
 ```
+npm install
+bower install
 npm start
 ```
 

@@ -1,5 +1,7 @@
 'use strict';
 
+/* global localStorage */
+
 var React = require('react/addons');
 var TestUtils = React.addons.TestUtils;
 var renderComponent = TestUtils.renderIntoDocument;

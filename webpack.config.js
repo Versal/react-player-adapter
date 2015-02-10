@@ -2,6 +2,7 @@ module.exports = {
   devtool: 'eval',
   resolve: {
     modulesDirectories: [
+      'bower_components',
       'node_modules'
     ],
     extensions: [
@@ -14,7 +15,7 @@ module.exports = {
     loaders: [
       {
         test: /\.jsx?$/,
-        exclude: /node_modules/,
+        exclude: /node_modules|bower_components/,
         loaders: ['jshint', 'jsx-loader?harmony']
       }
     ]
@@ -39,6 +40,10 @@ module.exports = {
     predef: [
       // testing tools
       'it',
+      'before',
+      'beforeEach',
+      'after',
+      'afterEach',
       'sinon',
       'describe',
       'expect'
