@@ -2,7 +2,6 @@
 
 /* global document */
 /* global Event */
-/* global localStorage */
 
 var _ = require('underscore');
 var React = require('react/addons');
@@ -118,17 +117,22 @@ var IframelessAdapter = React.createClass({
 
   _onRestoreState: function(rawState) {
     var state = _.extend(
-      {},
+      {
+        key: '' + new Date().getTime(),
+        playerStateReady: true
+      },
       rawState.attributes,
       rawState.learnerState,
       rawState.editable
     );
 
-    this.refs.playerAdapter.setState(state);
+    this.refs.playerAdapter.replaceState(state);
   },
 
   _onClearState: function() {
-    this.refs.playerAdapter.setState({
+    this.refs.playerAdapter.replaceState({
+      key: '' + new Date().getTime(),
+      playerStateReady: true,
       attributes: {},
       learnerState: {},
       editable: false
