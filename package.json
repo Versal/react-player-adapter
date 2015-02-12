@@ -1,20 +1,17 @@
 {
-  "name": "react-gadget-tools",
+  "name": "react-player-adapter",
   "version": "0.0.1",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Versal/react-gadget-tools.git"
+    "url": "https://github.com/Versal/react-gadget-adapter.git"
   },
   "scripts": {
     "test": "./node_modules/karma/bin/karma start --single-run",
     "start": "./node_modules/karma/bin/karma start --auto-watch"
   },
   "dependencies": {
-    "mousetrap": "~1.4.6",
-    "react-localstorage": "~0.1.1",
     "resistance": "jgallen23/resistance",
-    "underscore": "~1.7.0",
-    "underscore.string": "~3.0.3"
+    "underscore": "~1.7.0"
   },
   "peerDependencies": {
     "react": "~0.12.2"

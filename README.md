@@ -6,8 +6,6 @@ Useful components for building React-based gadgets
 
 ### `PlayerAdapter`
 
-An adapater component for React apps that makes it easy to integrate with a `VersalPlayerAPI` instance. [Read more](components/player_adapter/README.md)
-
 ## Development
 
 Watch and run tests.

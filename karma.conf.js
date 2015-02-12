@@ -7,10 +7,10 @@ module.exports = function(config) {
   config.set({
     frameworks: ['mocha', 'chai', 'sinon'],
     files: [
-      'components/**/spec.js?(x)'
+      'spec.jsx'
     ],
     preprocessors: {
-      'components/**/spec.js?(x)': ['webpack']
+      'spec.jsx': ['webpack']
     },
     webpack: webpack,
     reporters: ['spec'],
