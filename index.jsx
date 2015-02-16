@@ -11,6 +11,7 @@ var React = require('react/addons');
 var VersalPlayerAPI = require('versal-gadget-api/src/player-api');
 
 var PlayerAdapter = React.createClass({
+
   // Setup
 
   getInitialState: function() {
@@ -21,12 +22,19 @@ var PlayerAdapter = React.createClass({
 
   getDefaultProps: function() {
     return {
+      debug: true,
       propertySheets: {}
     };
   },
 
   propTypes: {
-    manifest: React.PropTypes.object, // TODO describe expected shape
+    manifest: React.PropTypes.shape({
+      name: React.PropTypes.string.isRequired,
+      title: React.PropTypes.string.isRequired,
+      author: React.PropTypes.string.isRequired,
+      description: React.PropTypes.string.isRequired,
+      version: React.PropTypes.string.isRequired
+    }).isRequired,
     debug: React.PropTypes.bool,
     playerApi: React.PropTypes.object,
     propertySheets: React.PropTypes.object,

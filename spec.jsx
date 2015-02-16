@@ -1,7 +1,5 @@
 'use strict';
 
-/* global localStorage */
-
 var React = require('react/addons');
 var TestUtils = React.addons.TestUtils;
 var renderComponent = TestUtils.renderIntoDocument;
@@ -10,16 +8,20 @@ var findComponent = TestUtils.findRenderedDOMComponentWithClass;
 var PlayerAdapter = require('.');
 var VersalPlayerAPI = require('versal-gadget-api/src/player-api');
 
-beforeEach(function() {
-  localStorage.clear();
-});
+var testManifest = {
+  name: 'fake-gadget',
+  title: 'Fake gadget',
+  version: '0.0.1',
+  description: 'Does fake things',
+  author: 'Faker',
+};
 
 describe('Player', function() {
   describe('Init', function() {
     it('should create a versal API instance', function() {
       var playerApi = new VersalPlayerAPI();
       var playerAdapterComponent = renderComponent(
-        <PlayerAdapter playerApi={playerApi} manifest={{}}>
+        <PlayerAdapter playerApi={playerApi} manifest={testManifest}>
           <div>test component</div>
         </PlayerAdapter>
       );
@@ -33,7 +35,7 @@ describe('Player', function() {
       it('should sync to `this.state`', function() {
         var playerApi = new VersalPlayerAPI();
         var playerAdapterComponent = renderComponent(
-          <PlayerAdapter playerApi={playerApi} manifest={{}}>
+          <PlayerAdapter playerApi={playerApi} manifest={testManifest}>
             <div>test component</div>
           </PlayerAdapter>
         );
@@ -48,7 +50,7 @@ describe('Player', function() {
       it('should sync to `this.state`', function() {
         var playerApi = new VersalPlayerAPI();
         var playerAdapterComponent = renderComponent(
-          <PlayerAdapter playerApi={playerApi} manifest={{}}>
+          <PlayerAdapter playerApi={playerApi} manifest={testManifest}>
             <div>test component</div>
           </PlayerAdapter>
         );
@@ -63,7 +65,7 @@ describe('Player', function() {
       it('should sync to `this.state`', function() {
         var playerApi = new VersalPlayerAPI();
         var playerAdapterComponent = renderComponent(
-          <PlayerAdapter playerApi={playerApi} manifest={{}}>
+          <PlayerAdapter playerApi={playerApi} manifest={testManifest}>
             <div>test component</div>
           </PlayerAdapter>
         );
@@ -81,7 +83,7 @@ describe('Player', function() {
     it('should export a falsey value', function() {
       var playerApi = new VersalPlayerAPI();
       var playerAdapterComponent = renderComponent(
-        <PlayerAdapter playerApi={playerApi} manifest={{}}>
+        <PlayerAdapter playerApi={playerApi} manifest={testManifest}>
           <div>test component</div>
         </PlayerAdapter>
       );
@@ -93,7 +95,7 @@ describe('Player', function() {
       it('should export a truthey value', function(done) {
         var playerApi = new VersalPlayerAPI();
         var playerAdapterComponent = renderComponent(
-          <PlayerAdapter playerApi={playerApi} manifest={{}}>
+          <PlayerAdapter playerApi={playerApi} manifest={testManifest}>
             <div>test component</div>
           </PlayerAdapter>
         );
@@ -115,7 +117,7 @@ describe('Player', function() {
       var playerApi = new VersalPlayerAPI();
       var playerAdapterComponent = renderComponent(
         <div className="wrapper">
-          <PlayerAdapter playerApi={playerApi} manifest={{}}>
+          <PlayerAdapter playerApi={playerApi} manifest={testManifest}>
             <div className="test">test component</div>
           </PlayerAdapter>
         </div>
@@ -131,7 +133,7 @@ describe('Player', function() {
 
         var playerApi = new VersalPlayerAPI();
         var playerAdapterComponent = renderComponent(
-          <PlayerAdapter playerApi={playerApi} manifest={{}}>
+          <PlayerAdapter playerApi={playerApi} manifest={testManifest}>
             <div className="test">test component</div>
           </PlayerAdapter>
         );
