@@ -14,6 +14,13 @@ var emptyPlayerState = {
   editable: { editable: false }
 };
 
+var log = function() {
+  console.info.apply(console, arguments);
+};
+
+var logOutgoing = _.partial(log, '↗', _, '↗');
+var logIncoming = _.partial(log, '↙', _, '↙');
+
 class IframelessPlayerAPI extends EventEmitter {
   constructor(config) {
     // Fix legacy naming and provide default to the default
@@ -49,14 +56,21 @@ class IframelessPlayerAPI extends EventEmitter {
   }
 
   startListening() {
+    logIncoming('startListening');
     _.defer(function() {
-      this.emit('attributesChanged', this.playerState.attributes);
-      this.emit('learnerStateChanged', this.playerState.learnerState);
-      this.emit('editableChanged', this.playerState.editable);
+      this._sendMessageToGadget('attributesChanged', this.playerState.attributes);
+      this._sendMessageToGadget('learnerStateChanged', this.playerState.learnerState);
+      this._sendMessageToGadget('editableChanged', this.playerState.editable);
     }.bind(this));
   }
 
+  _sendMessageToGadget(messageName, payload) {
+    logOutgoing(messageName, payload);
+    this.emit(messageName, payload);
+  }
+
   setAttributes(attributes) {
+    logIncoming('startAttributes');
     _.defer(function() {
       attributes = _.extend(
         {},
@@ -72,6 +86,7 @@ class IframelessPlayerAPI extends EventEmitter {
   }
 
   setLearnerState(learnerState) {
+    logIncoming('setLearnerState');
     _.defer(function() {
       learnerState = _.extend(
         {},
@@ -86,8 +101,13 @@ class IframelessPlayerAPI extends EventEmitter {
     }.bind(this));
   }
 
-  setPropertySheetAttributes(settings) {}
-  watchBodyHeight() {}
+  setPropertySheetAttributes(settings) {
+    logIncoming('setPropertySheetAttributes');
+  }
+
+  watchBodyHeight() {
+    logIncoming('watchBodyHeight');
+  }
 
   // Iframeless launcher specific API
 
@@ -102,7 +122,7 @@ class IframelessPlayerAPI extends EventEmitter {
 
   _setPlayerState(name, value) {
     this.playerState[name] = value;
-    this.emit(`${name}Changed`, value);
+    this._sendMessageToGadget(`${name}Changed`, value);
     localStorage[this.localStorageKey] = JSON.stringify(this.playerState);
   }
 
