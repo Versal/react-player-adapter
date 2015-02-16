@@ -152,7 +152,7 @@ describe('Player', function() {
   });
 
   describe('Mutators', function() {
-    describe('setStateAndAttributes', function() {
+    describe('setStateAndPlayerAttributes', function() {
       it('should set attributes on the adapter component', function() {
         var playerApi = new VersalPlayerAPI();
         var playerAdapterComponent = renderComponent(
@@ -161,7 +161,7 @@ describe('Player', function() {
           </PlayerAdapter>
         );
 
-        playerAdapterComponent.setStateAndAttributes({
+        playerAdapterComponent.setStateAndPlayerAttributes({
           foo: 'moof'
         });
         expect(playerAdapterComponent.state.foo).to.eq('moof');
@@ -175,7 +175,7 @@ describe('Player', function() {
           </PlayerAdapter>
         );
 
-        playerAdapterComponent.setStateAndAttributes({
+        playerAdapterComponent.setStateAndPlayerAttributes({
           foo: 'doof'
         }, done);
       });
@@ -190,7 +190,7 @@ describe('Player', function() {
 
         sinon.stub(playerApi, 'setAttributes');
 
-        playerAdapterComponent.setStateAndAttributes({
+        playerAdapterComponent.setStateAndPlayerAttributes({
           foo: 'feef'
         });
 
@@ -202,7 +202,7 @@ describe('Player', function() {
       });
     });
 
-    describe('setStateAndLearnerState', function() {
+    describe('setStateAndPlayerLearnerState', function() {
       it('should set learner state on the adapter component', function() {
         var playerApi = new VersalPlayerAPI();
         var playerAdapterComponent = renderComponent(
@@ -211,7 +211,7 @@ describe('Player', function() {
           </PlayerAdapter>
         );
 
-        playerAdapterComponent.setStateAndLearnerState({
+        playerAdapterComponent.setStateAndPlayerLearnerState({
           foo: 'leef'
         });
         expect(playerAdapterComponent.state.foo).to.eq('leef');
@@ -225,7 +225,7 @@ describe('Player', function() {
           </PlayerAdapter>
         );
 
-        playerAdapterComponent.setStateAndLearnerState({
+        playerAdapterComponent.setStateAndPlayerLearnerState({
           foo: 'heef'
         }, done);
       });
@@ -240,7 +240,7 @@ describe('Player', function() {
 
         sinon.stub(playerApi, 'setLearnerState');
 
-        playerAdapterComponent.setStateAndLearnerState({
+        playerAdapterComponent.setStateAndPlayerLearnerState({
           foo: 'weef'
         });
 
@@ -262,17 +262,17 @@ describe('Player', function() {
         );
 
         var setter = playerAdapterComponent.attributesSetterForKey('doof');
-        sinon.stub(playerAdapterComponent, 'setStateAndAttributes');
+        sinon.stub(playerAdapterComponent, 'setStateAndPlayerAttributes');
 
         setter('loof');
 
         var persistedAttributes = playerAdapterComponent
-                                   .setStateAndAttributes
+                                   .setStateAndPlayerAttributes
                                    .firstCall
                                    .args[0];
         persistedAttributes.doof.should.eq('loof');
 
-        playerAdapterComponent.setStateAndAttributes.restore();
+        playerAdapterComponent.setStateAndPlayerAttributes.restore();
       });
     });
 
@@ -286,17 +286,17 @@ describe('Player', function() {
         );
 
         var setter = playerAdapterComponent.learnerStateSetterForKey('doof');
-        sinon.stub(playerAdapterComponent, 'setStateAndLearnerState');
+        sinon.stub(playerAdapterComponent, 'setStateAndPlayerLearnerState');
 
         setter('loof');
 
         var persistedLearnerState = playerAdapterComponent
-                                   .setStateAndLearnerState
+                                   .setStateAndPlayerLearnerState
                                    .firstCall
                                    .args[0];
         persistedLearnerState.doof.should.eq('loof');
 
-        playerAdapterComponent.setStateAndLearnerState.restore();
+        playerAdapterComponent.setStateAndPlayerLearnerState.restore();
       });
     });
   });

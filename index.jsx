@@ -76,8 +76,8 @@ var PlayerAdapter = React.createClass({
   render: function() {
     // We pass a bunch of mutation helpers into the root component
     var playerStateMutators = _.pick(this, [
-      'setStateAndAttributes',
-      'setStateAndLearnerState',
+      'setStateAndPlayerAttributes',
+      'setStateAndPlayerLearnerState',
       'attributesSetterForKey',
       'learnerStateSetterForKey'
     ]);
@@ -113,12 +113,12 @@ var PlayerAdapter = React.createClass({
     return this._getSetterForKey('learnerState', key);
   },
 
-  setStateAndAttributes: function(attributes, callback) {
+  setStateAndPlayerAttributes: function(attributes, callback) {
     this.setState(attributes, callback);
     this.player.setAttributes(attributes);
   },
 
-  setStateAndLearnerState: function(learnerState, callback) {
+  setStateAndPlayerLearnerState: function(learnerState, callback) {
     this.setState(learnerState, callback);
     this.player.setLearnerState(learnerState);
   },
@@ -173,9 +173,9 @@ var PlayerAdapter = React.createClass({
       data[keyName] = val;
 
       if (dataType === 'learnerState') {
-        this.setStateAndLearnerState(data);
+        this.setStateAndPlayerLearnerState(data);
       } else {
-        this.setStateAndAttributes(data);
+        this.setStateAndPlayerAttributes(data);
       }
     }.bind(this);
   }
