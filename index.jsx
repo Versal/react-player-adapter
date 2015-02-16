@@ -78,8 +78,8 @@ var PlayerAdapter = React.createClass({
     var playerStateMutators = _.pick(this, [
       'setStateAndAttributes',
       'setStateAndLearnerState',
-      'attributesSetterFor',
-      'learnerStateSetterFor'
+      'attributesSetterForKey',
+      'learnerStateSetterForKey'
     ]);
 
     var { playerStateReady, ...playerState } = this.state;
@@ -105,21 +105,21 @@ var PlayerAdapter = React.createClass({
 
   // API
 
-  attributesSetterFor: function(key) {
-    return this._getSetterFor('attributes', key);
+  attributesSetterForKey: function(key) {
+    return this._getSetterForKey('attributes', key);
   },
 
-  learnerStateSetterFor: function(key) {
-    return this._getSetterFor('learnerState', key);
+  learnerStateSetterForKey: function(key) {
+    return this._getSetterForKey('learnerState', key);
   },
 
-  setStateAndAttributes: function(attributes) {
-    this.setState(attributes);
+  setStateAndAttributes: function(attributes, callback) {
+    this.setState(attributes, callback);
     this.player.setAttributes(attributes);
   },
 
-  setStateAndLearnerState: function(learnerState) {
-    this.setState(learnerState);
+  setStateAndLearnerState: function(learnerState, callback) {
+    this.setState(learnerState, callback);
     this.player.setLearnerState(learnerState);
   },
 
@@ -167,7 +167,7 @@ var PlayerAdapter = React.createClass({
     }.bind(this));
   },
 
-  _getSetterFor: function(dataType, keyName) {
+  _getSetterForKey: function(dataType, keyName) {
     return function(val) {
       var data = {};
       data[keyName] = val;

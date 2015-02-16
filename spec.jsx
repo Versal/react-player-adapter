@@ -152,9 +152,152 @@ describe('Player', function() {
   });
 
   describe('Mutators', function() {
-    it.skip('TODO setStateAndAttributes');
-    it.skip('TODO setStateAndLearnerState');
-    it.skip('TODO learnerStateSetterFor');
-    it.skip('TODO attributesSetterFor');
+    describe('setStateAndAttributes', function() {
+      it('should set attributes on the adapter component', function() {
+        var playerApi = new VersalPlayerAPI();
+        var playerAdapterComponent = renderComponent(
+          <PlayerAdapter playerApi={playerApi} manifest={testManifest}>
+            <div>test component</div>
+          </PlayerAdapter>
+        );
+
+        playerAdapterComponent.setStateAndAttributes({
+          foo: 'moof'
+        });
+        expect(playerAdapterComponent.state.foo).to.eq('moof');
+      });
+
+      it('should callback when state as set a la `setState`', function(done) {
+        var playerApi = new VersalPlayerAPI();
+        var playerAdapterComponent = renderComponent(
+          <PlayerAdapter playerApi={playerApi} manifest={testManifest}>
+            <div>test component</div>
+          </PlayerAdapter>
+        );
+
+        playerAdapterComponent.setStateAndAttributes({
+          foo: 'doof'
+        }, done);
+      });
+
+      it('should send attributes to the player', function() {
+        var playerApi = new VersalPlayerAPI();
+        var playerAdapterComponent = renderComponent(
+          <PlayerAdapter playerApi={playerApi} manifest={testManifest}>
+            <div>test component</div>
+          </PlayerAdapter>
+        );
+
+        sinon.stub(playerApi, 'setAttributes');
+
+        playerAdapterComponent.setStateAndAttributes({
+          foo: 'feef'
+        });
+
+        playerApi.setAttributes.called.should.be.true;
+        var persistedAttributes = playerApi.setAttributes.firstCall.args[0];
+        persistedAttributes.foo.should.eq('feef');
+
+        playerApi.setAttributes.restore();
+      });
+    });
+
+    describe('setStateAndLearnerState', function() {
+      it('should set learner state on the adapter component', function() {
+        var playerApi = new VersalPlayerAPI();
+        var playerAdapterComponent = renderComponent(
+          <PlayerAdapter playerApi={playerApi} manifest={testManifest}>
+            <div>test component</div>
+          </PlayerAdapter>
+        );
+
+        playerAdapterComponent.setStateAndLearnerState({
+          foo: 'leef'
+        });
+        expect(playerAdapterComponent.state.foo).to.eq('leef');
+      });
+
+      it('should callback when state as set a la `setState`', function(done) {
+        var playerApi = new VersalPlayerAPI();
+        var playerAdapterComponent = renderComponent(
+          <PlayerAdapter playerApi={playerApi} manifest={testManifest}>
+            <div>test component</div>
+          </PlayerAdapter>
+        );
+
+        playerAdapterComponent.setStateAndLearnerState({
+          foo: 'heef'
+        }, done);
+      });
+
+      it('should send learner state to the player', function() {
+        var playerApi = new VersalPlayerAPI();
+        var playerAdapterComponent = renderComponent(
+          <PlayerAdapter playerApi={playerApi} manifest={testManifest}>
+            <div>test component</div>
+          </PlayerAdapter>
+        );
+
+        sinon.stub(playerApi, 'setLearnerState');
+
+        playerAdapterComponent.setStateAndLearnerState({
+          foo: 'weef'
+        });
+
+        playerApi.setLearnerState.called.should.be.true;
+        var persistedLearnerState = playerApi.setLearnerState.firstCall.args[0];
+        persistedLearnerState.foo.should.eq('weef');
+
+        playerApi.setLearnerState.restore();
+      });
+    });
+
+    describe('attributesSetterForKey', function() {
+      it('should return a setter for a specific key', function() {
+        var playerApi = new VersalPlayerAPI();
+        var playerAdapterComponent = renderComponent(
+          <PlayerAdapter playerApi={playerApi} manifest={testManifest}>
+            <div>test component</div>
+          </PlayerAdapter>
+        );
+
+        var setter = playerAdapterComponent.attributesSetterForKey('doof');
+        sinon.stub(playerAdapterComponent, 'setStateAndAttributes');
+
+        setter('loof');
+
+        var persistedAttributes = playerAdapterComponent
+                                   .setStateAndAttributes
+                                   .firstCall
+                                   .args[0];
+        persistedAttributes.doof.should.eq('loof');
+
+        playerAdapterComponent.setStateAndAttributes.restore();
+      });
+    });
+
+    describe('learnerStateSetterForKey', function() {
+      it('should return a setter for a specific key', function() {
+        var playerApi = new VersalPlayerAPI();
+        var playerAdapterComponent = renderComponent(
+          <PlayerAdapter playerApi={playerApi} manifest={testManifest}>
+            <div>test component</div>
+          </PlayerAdapter>
+        );
+
+        var setter = playerAdapterComponent.learnerStateSetterForKey('doof');
+        sinon.stub(playerAdapterComponent, 'setStateAndLearnerState');
+
+        setter('loof');
+
+        var persistedLearnerState = playerAdapterComponent
+                                   .setStateAndLearnerState
+                                   .firstCall
+                                   .args[0];
+        persistedLearnerState.doof.should.eq('loof');
+
+        playerAdapterComponent.setStateAndLearnerState.restore();
+      });
+    });
   });
 });
