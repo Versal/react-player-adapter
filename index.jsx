@@ -78,6 +78,7 @@ var PlayerAdapter = React.createClass({
   render: function() {
     // We pass a bunch of mutation helpers into the root component
     var playerStateMutators = _.pick(this, [
+      'selectImage',
       'setStateAndPlayerAttributes',
       'setStateAndPlayerLearnerState',
       'attributesSetterForKey',
@@ -106,6 +107,15 @@ var PlayerAdapter = React.createClass({
   },
 
   // API
+
+  selectImage: function(assetName) {
+    assetName = '__' + assetName;
+    this._selectingImageName = assetName;
+    this.player.requestAsset({
+      type: 'image',
+      attribute: assetName
+    });
+  },
 
   attributesSetterForKey: function(key, waitMs) {
     waitMs = waitMs || this.props.debounceSaveMs;
@@ -149,8 +159,57 @@ var PlayerAdapter = React.createClass({
 
   _onStateChange: function(data) {
     if (!_.isEmpty(data)) {
+      this._processImageData(data);
       this.setState(data);
     }
+  },
+
+  _processImageData: function(data) {
+    var imageName = this._selectingImageName;
+
+    if (imageName && data[imageName]) {
+      var imageData = data[imageName];
+      var imageUrls = this._getImageUrls(imageData);
+
+      var attributes = {};
+      attributes[imageName.slice(2)] = imageUrls;
+
+      this.player.setAttributes(attributes);
+    }
+
+    delete this._selectingImageName;
+  },
+
+  _getImageUrls: function(imageData) {
+    var originalImage = _.findWhere(
+      imageData.representations,
+      { original: true}
+    );
+    var originalUrl = _.template(this.player.assetUrlTemplate)(originalImage);
+
+    var smallUrl;
+    var smallImage = _.findWhere(
+      imageData.representations,
+      { scale: '320x240'}
+    );
+    if (smallImage) {
+      smallUrl = _.template(this.player.assetUrlTemplate)(smallImage);
+    }
+
+    var largeUrl;
+    var largeImage = _.findWhere(
+      imageData.representations,
+      { scale: '800x600'}
+    );
+    if (largeImage) {
+      largeUrl = _.template(this.player.assetUrlTemplate)(largeImage);
+    }
+
+    return {
+      original: originalUrl,
+      small: smallUrl,
+      large: largeUrl
+    };
   },
 
   // Wait for an event to fire once, or give up and callback with an error
