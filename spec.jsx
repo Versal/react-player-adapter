@@ -253,7 +253,7 @@ describe('Player', function() {
     });
 
     describe('attributesSetterForKey', function() {
-      it('should return a setter for a specific key', function() {
+      it('should return a setter for a specific key', function(done) {
         var playerApi = new VersalPlayerAPI();
         var playerAdapterComponent = renderComponent(
           <PlayerAdapter playerApi={playerApi} manifest={testManifest}>
@@ -266,18 +266,22 @@ describe('Player', function() {
 
         setter('loof');
 
-        var persistedAttributes = playerAdapterComponent
-                                   .setStateAndPlayerAttributes
-                                   .firstCall
-                                   .args[0];
-        persistedAttributes.doof.should.eq('loof');
+        // Wait for debouncing to finish
+        setTimeout(function() {
+          var persistedAttributes = playerAdapterComponent
+                                    .setStateAndPlayerAttributes
+                                    .firstCall
+                                    .args[0];
+          persistedAttributes.doof.should.eq('loof');
 
-        playerAdapterComponent.setStateAndPlayerAttributes.restore();
+          playerAdapterComponent.setStateAndPlayerAttributes.restore();
+          done();
+        }, playerAdapterComponent.props.debounceSaveMs);
       });
     });
 
     describe('learnerStateSetterForKey', function() {
-      it('should return a setter for a specific key', function() {
+      it('should return a setter for a specific key', function(done) {
         var playerApi = new VersalPlayerAPI();
         var playerAdapterComponent = renderComponent(
           <PlayerAdapter playerApi={playerApi} manifest={testManifest}>
@@ -290,13 +294,17 @@ describe('Player', function() {
 
         setter('loof');
 
-        var persistedLearnerState = playerAdapterComponent
-                                   .setStateAndPlayerLearnerState
-                                   .firstCall
-                                   .args[0];
-        persistedLearnerState.doof.should.eq('loof');
+        // Wait for debouncing to finish
+        setTimeout(function() {
+          var persistedLearnerState = playerAdapterComponent
+                                    .setStateAndPlayerLearnerState
+                                    .firstCall
+                                    .args[0];
+          persistedLearnerState.doof.should.eq('loof');
 
-        playerAdapterComponent.setStateAndPlayerLearnerState.restore();
+          playerAdapterComponent.setStateAndPlayerLearnerState.restore();
+          done();
+        }, playerAdapterComponent.props.debounceSaveMs);
       });
     });
   });

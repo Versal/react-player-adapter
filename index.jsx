@@ -23,6 +23,7 @@ var PlayerAdapter = React.createClass({
   getDefaultProps: function() {
     return {
       debug: true,
+      debounceSaveMs: 350,
       propertySheets: {}
     };
   },
@@ -56,6 +57,7 @@ var PlayerAdapter = React.createClass({
     this.player.on('editableChanged', this._onStateChange);
 
     this._waitForStateReadiness();
+    this._debouncedSetters = {};
   },
 
   componentDidMount: function() {
@@ -105,12 +107,32 @@ var PlayerAdapter = React.createClass({
 
   // API
 
-  attributesSetterForKey: function(key) {
-    return this._getSetterForKey('attributes', key);
+  attributesSetterForKey: function(key, waitMs) {
+    waitMs = waitMs || this.props.debounceSaveMs;
+
+    var setterKey = `attributes-${key}-${waitMs}`;
+    var setter = this._getSetterForKey('attributes', key);
+
+    if (!this._debouncedSetters[setterKey]) {
+      this._debouncedSetters[setterKey] =
+        _.debounce(setter, waitMs);
+    }
+
+    return this._debouncedSetters[setterKey];
   },
 
-  learnerStateSetterForKey: function(key) {
-    return this._getSetterForKey('learnerState', key);
+  learnerStateSetterForKey: function(key, waitMs) {
+    waitMs = waitMs || this.props.debounceSaveMs;
+
+    var setterKey = `learnerState-${key}-${waitMs}`;
+    var setter = this._getSetterForKey('learnerState', key);
+
+    if (!this._debouncedSetters[setterKey]) {
+      this._debouncedSetters[setterKey] =
+        _.debounce(setter, waitMs);
+    }
+
+    return this._debouncedSetters[setterKey];
   },
 
   setStateAndPlayerAttributes: function(attributes, callback) {
