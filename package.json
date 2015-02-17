@@ -7,7 +7,8 @@
   },
   "scripts": {
     "test": "./node_modules/karma/bin/karma start --single-run",
-    "start": "./node_modules/karma/bin/karma start --auto-watch"
+    "start": "./node_modules/karma/bin/karma start --auto-watch",
+    "dev-workaround": "./node_modules/.bin/wr --exec bin/react-webpack-peer-dependency-workaround.sh *.jsx react_launcher"
   },
   "dependencies": {
     "resistance": "jgallen23/resistance",
@@ -30,6 +31,7 @@
     "karma-webpack": "~1.5.0",
     "mocha": "~2.1.0",
     "sinon": "~1.12.2",
-    "webpack": "~1.5.3"
+    "webpack": "~1.5.3",
+    "wr": "~1.3.1"
   }
 }

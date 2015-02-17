@@ -2,6 +2,13 @@
 
 An adapter component for React apps that makes it easy to integrate with a `VersalPlayerAPI` instance.
 
+## Install
+
+```
+npm install
+npm test
+```
+
 ## Usage
 
 [See example app](https://github.com/Versal/react-gadget-example/blob/master/components/app/index.jsx)
@@ -51,3 +58,13 @@ render: function() {
 ### `setStateAndPlayerLearnerState(learnerState)`
 
 These lower level methods (which are called by `attributesSetterFor` and `learnerStateSetterFor`) call `setState` and `setAttributes`/`setLearnerState`. Since React's state is set via `setState` the data will flow into your app via props and changes will be persisted via the `VersalPlayerApi` instance by calling `this.player.setAttributes/setLearnerState`.
+
+## Development
+
+Watch files and run tests on change
+
+```
+npm start
+```
+
+Unfortunately if you want to develop this against an existing app you'll need to [know about this](bin/react-webpack-peer-dependency-workaround.sh)
