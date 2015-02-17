@@ -1,19 +1,53 @@
-# React gadget tools
+# Player adapter component
 
-## Components
+An adapter component for React apps that makes it easy to integrate with a `VersalPlayerAPI` instance.
 
-Useful components for building React-based gadgets
+## Usage
 
-### `PlayerAdapter`
+[See example app](https://github.com/Versal/react-gadget-example/blob/master/components/app/index.jsx)
 
-## Development
+## How it works
 
-Watch and run tests.
+Wrapping your app's root component with a `PlayerAdapter` has the following benefits:
+
+* The wrapped component won't render until `VersalPlayerAPI`'s initial data is ready.
+
+* Gadget learner state, attributes, and `editable` boolean flow into the wrapped component via `props`.
+
+* Several mutators are available to the wrapped component for persisting data. All data persisted to player flows back into the wrapped component via props (yup, uni-directional).
+
+* `PlayerAdapter` takes a prop called `propertySheets` with your app's desired property sheet schema. Data from property sheets will flow back into your app via `props` along with other data.
+
+## State helpers
+
+Four methods are provided for updating state:
+
+### `attributesSetterFor(key, [waitMs])`
+### `learnerStateSetterFor(key, [waitMs])`
+
+These allow you to create a setter for a specific field for use by the component that's responsible for handling the corresponding input. This is the preferred method when using `PlayerAdapter`. The optional `waitMs` parameter causes the returned function to be debounced.
+
+#### Example
 
 ```
-npm install
-bower install
-npm start
+onComponentWillMount: function() {
+  this.onCardsChanged = this.attributesSetterFor('cards');
+  this.onPositionChanged = this.learnerStateSetterFor('position');
+}
+
+render: function() {
+  return (
+    <Cards
+      cards={this.props.cards}
+      onCardsChange={this.onCardsChanged} />
+    <Progress
+      position={this.props.position}
+      onPositionChange={this.onPositionChanged} />
+  );
+}
 ```
 
-Use [the example app](https://github.com/Versal/react-gadget-tools) for higher level manual and automated testing.
+### `setStateAndPlayerAttributes(attributes)`
+### `setStateAndPlayerLearnerState(learnerState)`
+
+These lower level methods (which are called by `attributesSetterFor` and `learnerStateSetterFor`) call `setState` and `setAttributes`/`setLearnerState`. Since React's state is set via `setState` the data will flow into your app via props and changes will be persisted via the `VersalPlayerApi` instance by calling `this.player.setAttributes/setLearnerState`.
