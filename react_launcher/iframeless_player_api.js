@@ -79,7 +79,23 @@ class IframelessPlayerAPI extends EventEmitter {
   }
 
   requestAsset(options) {
-    var image = JSON.parse('{"id":"a1e93ec4-2058-4aa3-806c-da54f8d8a9a0","title":"New File","tags":["image"],"representations":[{"location":"https://stack.versal.com:443/api2/assets/de3b79ac-57fe-4e71-b112-a8e10ee02c0a","scale":"800x600","id":"de3b79ac-57fe-4e71-b112-a8e10ee02c0a","contentType":"image/jpeg","available":true,"original":false},{"location":"https://stack.versal.com:443/api2/assets/8de43a67-30d1-435e-9bf1-111075d6f412","scale":"320x240","id":"8de43a67-30d1-435e-9bf1-111075d6f412","contentType":"image/jpeg","available":true,"original":false},{"location":"https://stack.versal.com:443/api2/assets/1e2c58e2-511c-4791-907b-53ab9dc62fd5","id":"1e2c58e2-511c-4791-907b-53ab9dc62fd5","contentType":"image/jpeg","available":true,"original":true}]}');
+    // A fake asset that lives in prod stack for now TODO
+    var image = {
+      representations:[
+          {
+            scale:'800x600',
+            id:'de3b79ac-57fe-4e71-b112-a8e10ee02c0a'
+          },
+          {
+            scale:'320x240',
+            id:'8de43a67-30d1-435e-9bf1-111075d6f412'
+          },
+          {
+            id:'1e2c58e2-511c-4791-907b-53ab9dc62fd5',
+            contentType:'image/jpeg'
+          }
+      ]
+    };
 
     var attributes = {};
     attributes[options.attribute] = image;

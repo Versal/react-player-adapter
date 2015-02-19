@@ -23,7 +23,7 @@ var PlayerAdapter = React.createClass({
   getDefaultProps: function() {
     return {
       debug: true,
-      debounceSaveMs: 350,
+      debounceSaveMs: 250,
       propertySheets: {}
     };
   },
