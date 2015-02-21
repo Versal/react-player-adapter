@@ -29,7 +29,7 @@ Wrapping your app's root component with a `PlayerAdapter` has the following bene
 
 Four methods are provided for updating state:
 
-### `attributesSetterFor(key, [waitMs])`
+### `attributeSetterFor(key, [waitMs])`
 ### `learnerStateSetterFor(key, [waitMs])`
 
 These allow you to create a setter for a specific field for use by the component that's responsible for handling the corresponding input. This is the preferred method when using `PlayerAdapter`. The optional `waitMs` parameter causes the returned function to be debounced.
@@ -38,7 +38,7 @@ These allow you to create a setter for a specific field for use by the component
 
 ```
 onComponentWillMount: function() {
-  this.onCardsChanged = this.attributesSetterFor('cards');
+  this.onCardsChanged = this.attributeSetterFor('cards');
   this.onPositionChanged = this.learnerStateSetterFor('position');
 }
 
@@ -54,10 +54,10 @@ render: function() {
 }
 ```
 
-### `setStateAndPlayerAttributes(attributes)`
-### `setStateAndPlayerLearnerState(learnerState)`
+### `setAttributes(attributes)`
+### `setLearnerState(learnerState)`
 
-These lower level methods (which are called by `attributesSetterFor` and `learnerStateSetterFor`) call `setState` and `setAttributes`/`setLearnerState`. Since React's state is set via `setState` the data will flow into your app via props and changes will be persisted via the `VersalPlayerApi` instance by calling `this.player.setAttributes/setLearnerState`.
+These lower level methods (which are called by `attributeSetterFor` and `learnerStateSetterFor`) call `setState` and `setAttributes`/`setLearnerState`. Since React's state is set via `setState` the data will flow into your app via props and changes will be persisted via the `VersalPlayerApi` instance by calling `this.player.setAttributes/setLearnerState`.
 
 ## Development
 
