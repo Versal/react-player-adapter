@@ -152,7 +152,7 @@ describe('Player', function() {
   });
 
   describe('Mutators', function() {
-    describe('setStateAndPlayerAttributes', function() {
+    describe('setAttributes', function() {
       it('should set attributes on the adapter component', function() {
         var playerApi = new VersalPlayerAPI();
         var playerAdapterComponent = renderComponent(
@@ -161,7 +161,7 @@ describe('Player', function() {
           </PlayerAdapter>
         );
 
-        playerAdapterComponent.setStateAndPlayerAttributes({
+        playerAdapterComponent.setAttributes({
           foo: 'moof'
         });
         expect(playerAdapterComponent.state.foo).to.eq('moof');
@@ -175,7 +175,7 @@ describe('Player', function() {
           </PlayerAdapter>
         );
 
-        playerAdapterComponent.setStateAndPlayerAttributes({
+        playerAdapterComponent.setAttributes({
           foo: 'doof'
         }, done);
       });
@@ -190,7 +190,7 @@ describe('Player', function() {
 
         sinon.stub(playerApi, 'setAttributes');
 
-        playerAdapterComponent.setStateAndPlayerAttributes({
+        playerAdapterComponent.setAttributes({
           foo: 'feef'
         });
 
@@ -202,7 +202,7 @@ describe('Player', function() {
       });
     });
 
-    describe('setStateAndPlayerLearnerState', function() {
+    describe('setLearnerState', function() {
       it('should set learner state on the adapter component', function() {
         var playerApi = new VersalPlayerAPI();
         var playerAdapterComponent = renderComponent(
@@ -211,7 +211,7 @@ describe('Player', function() {
           </PlayerAdapter>
         );
 
-        playerAdapterComponent.setStateAndPlayerLearnerState({
+        playerAdapterComponent.setLearnerState({
           foo: 'leef'
         });
         expect(playerAdapterComponent.state.foo).to.eq('leef');
@@ -225,7 +225,7 @@ describe('Player', function() {
           </PlayerAdapter>
         );
 
-        playerAdapterComponent.setStateAndPlayerLearnerState({
+        playerAdapterComponent.setLearnerState({
           foo: 'heef'
         }, done);
       });
@@ -240,7 +240,7 @@ describe('Player', function() {
 
         sinon.stub(playerApi, 'setLearnerState');
 
-        playerAdapterComponent.setStateAndPlayerLearnerState({
+        playerAdapterComponent.setLearnerState({
           foo: 'weef'
         });
 
@@ -262,19 +262,19 @@ describe('Player', function() {
         );
 
         var setter = playerAdapterComponent.attributesSetterForKey('doof');
-        sinon.stub(playerAdapterComponent, 'setStateAndPlayerAttributes');
+        sinon.stub(playerAdapterComponent, 'setAttributes');
 
         setter('loof');
 
         // Wait for debouncing to finish
         setTimeout(function() {
           var persistedAttributes = playerAdapterComponent
-                                    .setStateAndPlayerAttributes
+                                    .setAttributes
                                     .firstCall
                                     .args[0];
           persistedAttributes.doof.should.eq('loof');
 
-          playerAdapterComponent.setStateAndPlayerAttributes.restore();
+          playerAdapterComponent.setAttributes.restore();
           done();
         }, playerAdapterComponent.props.debounceSaveMs);
       });
@@ -290,19 +290,19 @@ describe('Player', function() {
         );
 
         var setter = playerAdapterComponent.learnerStateSetterForKey('doof');
-        sinon.stub(playerAdapterComponent, 'setStateAndPlayerLearnerState');
+        sinon.stub(playerAdapterComponent, 'setLearnerState');
 
         setter('loof');
 
         // Wait for debouncing to finish
         setTimeout(function() {
           var persistedLearnerState = playerAdapterComponent
-                                    .setStateAndPlayerLearnerState
+                                    .setLearnerState
                                     .firstCall
                                     .args[0];
           persistedLearnerState.doof.should.eq('loof');
 
-          playerAdapterComponent.setStateAndPlayerLearnerState.restore();
+          playerAdapterComponent.setLearnerState.restore();
           done();
         }, playerAdapterComponent.props.debounceSaveMs);
       });

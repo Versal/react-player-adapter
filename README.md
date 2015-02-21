@@ -54,8 +54,8 @@ render: function() {
 }
 ```
 
-### `setStateAndPlayerAttributes(attributes)`
-### `setStateAndPlayerLearnerState(learnerState)`
+### `setAttributes(attributes)`
+### `setLearnerState(learnerState)`
 
 These lower level methods (which are called by `attributesSetterFor` and `learnerStateSetterFor`) call `setState` and `setAttributes`/`setLearnerState`. Since React's state is set via `setState` the data will flow into your app via props and changes will be persisted via the `VersalPlayerApi` instance by calling `this.player.setAttributes/setLearnerState`.
 
