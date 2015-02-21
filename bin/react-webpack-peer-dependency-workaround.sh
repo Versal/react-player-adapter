@@ -12,7 +12,7 @@
 # `react-gadget-example` application. This script should be run whenever the
 # source code changes, e.g.
 
-# `wr bin/react-webpack-peer-dependency-workaround.sh *.jsx react_launcher`
+# `wr bin/react-webpack-peer-dependency-workaround.sh *.jsx`
 
 # The above can be started with
 
@@ -22,6 +22,3 @@ set -e
 set -o verbose
 
 cp -r *.jsx ../react-gadget-example/node_modules/react-player-adapter/
-rm -rf ../react-gadget-example/node_modules/react-player-adapter/react_launcher
-mkdir -p ../react-gadget-example/node_modules/react-player-adapter/react_launcher
-cp -r react_launcher/* ../react-gadget-example/node_modules/react-player-adapter/react_launcher/

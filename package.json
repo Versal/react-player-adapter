@@ -8,7 +8,7 @@
   "scripts": {
     "test": "./node_modules/karma/bin/karma start --single-run",
     "start": "./node_modules/karma/bin/karma start --auto-watch",
-    "dev-workaround": "./node_modules/.bin/wr --exec bin/react-webpack-peer-dependency-workaround.sh *.jsx react_launcher"
+    "dev-workaround": "./node_modules/.bin/wr --exec bin/react-webpack-peer-dependency-workaround.sh *.jsx"
   },
   "dependencies": {
     "resistance": "jgallen23/resistance",
