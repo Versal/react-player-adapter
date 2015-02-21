@@ -252,7 +252,7 @@ describe('Player', function() {
       });
     });
 
-    describe('attributesSetterForKey', function() {
+    describe('attributeSetterForKey', function() {
       it('should return a setter for a specific key', function(done) {
         var playerApi = new VersalPlayerAPI();
         var playerAdapterComponent = renderComponent(
@@ -261,7 +261,7 @@ describe('Player', function() {
           </PlayerAdapter>
         );
 
-        var setter = playerAdapterComponent.attributesSetterForKey('doof');
+        var setter = playerAdapterComponent.attributeSetterForKey('doof');
         sinon.stub(playerAdapterComponent, 'setAttributes');
 
         setter('loof');

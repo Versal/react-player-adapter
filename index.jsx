@@ -80,7 +80,7 @@ var PlayerAdapter = React.createClass({
     var playerStateMutators = _.pick(this, [
       'setAttributes',
       'setLearnerState',
-      'attributesSetterForKey',
+      'attributeSetterForKey',
       'learnerStateSetterForKey'
     ]);
 
@@ -107,7 +107,7 @@ var PlayerAdapter = React.createClass({
 
   // API
 
-  attributesSetterForKey: function(key, waitMs) {
+  attributeSetterForKey: function(key, waitMs) {
     waitMs = waitMs || this.props.debounceSaveMs;
 
     var setterKey = `attributes-${key}-${waitMs}`;
